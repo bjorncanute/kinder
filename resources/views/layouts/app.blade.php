@@ -20,52 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <style type="text/css">
-        .user-menu .dropdown-menu {
-            width: 330px; 
-        }
-
-        .chat-menu .dropdown-menu {
-            width: 440px;
-        }
-
-        .chat-menu .dropdown-menu .nav-link {
-            color: black;
-        }
-        .chat-menu .dropdown-menu .nav-link.active {
-            color: black;
-        }
-
-        .notification-menu .dropdown-menu {
-            width: 440px;
-        }
-
-        .notification-menu .text-block {
-            white-space: normal;
-        }
-
-        .notification-menu .msg-attention {
-            background-color: #d4edda;
-        }
-        .notification-menu .avatar {
-            position: relative;
-        }
-        .notification-type-icon {
-            position: absolute;
-            bottom: -10px;
-            left: -14px;
-
-            width: 28px;
-            height: 28px;
-            border-radius: 100px;
-            background-color: white;
-            box-shadow: 0 0 8px 0 rgba(0,0,0,.21);
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
+   
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             
@@ -209,7 +164,21 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <div class="dropdown-item d-flex">
                                         <h5 class="mr-auto">Your Notifications</h5>
-                                        <span>LIVE</span>
+                                        
+                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            LIVE
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <p>Get real time notifications when you receive feedback messages</p>
+                                            <h6 class="dropdown-header">Show Live Notifications</h6>
+
+                                            <h6 class="dropdown-header">SHOW</h6>
+
+
+                                            <button class="dropdown-item" type="button">Action</button>
+                                            <button class="dropdown-item" type="button">Another action</button>
+                                            
+                                        </div>
                                     </div>
 
                                     <div class="dropdown-divider"></div>
@@ -336,6 +305,10 @@
 
                             </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Submit</a>
+                            </li>
+
                         @endguest
                     </ul>
 
@@ -345,23 +318,8 @@
         </nav>
 
         <main class="py-4">
-        <span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path transform="translate(3 3)" d="M12.569 0l-2.25 2.25H2.25v13.5h13.5V7.683L18 5.433V18H0V0h12.569zm2.749.46a1.572 1.572 0 012.222 2.222L10.222 10H8V7.778z"></path></svg>
-            <svg>
-        </span>
 
-        <span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M22 2v20H2V2h20zm-2 2H4v16h16V4z M11 16h7v2H11z"></path></svg>
-        </span>
-        
-
-        
-        <span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g transform="translate(3 3)"><path d="M8.87 11.63a2.71 2.71 0 110-5.43 2.71 2.71 0 010 5.43m8.04-4.58l-1.7-.34a6.67 6.67 0 00-.3-.71l.96-1.45c.3-.44.24-1.03-.14-1.4l-1.07-1.08a1.11 1.11 0 00-1.4-.14l-1.45.97a6.58 6.58 0 00-.72-.3L10.75.9c-.1-.53-.56-.9-1.09-.9H8.15c-.53 0-1 .37-1.1.9l-.34 1.7c-.24.09-.48.19-.71.3l-1.45-.97a1.11 1.11 0 00-1.4.14L2.06 3.14c-.37.38-.43.97-.14 1.4L2.9 6c-.11.23-.21.47-.3.71l-1.7.34c-.53.1-.9.57-.9 1.1v1.51c0 .53.37.99.9 1.1l1.7.33c.09.25.19.49.3.72l-.97 1.45c-.3.44-.23 1.03.14 1.4l1.07 1.07a1.11 1.11 0 001.4.14L6 14.91l.71.3.34 1.7c.1.52.57.9 1.1.9h1.51c.53 0 .99-.38 1.1-.9l.33-1.7.72-.3 1.45.96a1.1 1.1 0 001.4-.14l1.07-1.07c.38-.37.44-.96.14-1.4l-.96-1.45.3-.72 1.7-.34c.52-.1.9-.56.9-1.09V8.15c0-.53-.38-1-.9-1.1"></path></g></svg></span>
-
-            
-            
-        
+    
             @yield('content')
         </main>
     </div>

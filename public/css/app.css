@@ -10904,11 +10904,49 @@ a.text-dark:focus {
   }
 }
 
-.card-module {
-  width: 320px;
+.user-menu .dropdown-menu {
+  width: 330px;
 }
 
-.card-module-block {
-  border-bottom: 1px solid grey;
+.chat-menu .dropdown-menu {
+  width: 440px;
+}
+
+.chat-menu .dropdown-menu .nav-link {
+  color: black;
+}
+
+.chat-menu .dropdown-menu .nav-link.active {
+  color: black;
+}
+
+.notification-menu .dropdown-menu {
+  width: 440px;
+}
+
+.notification-menu .text-block {
+  white-space: normal;
+}
+
+.notification-menu .msg-attention {
+  background-color: #d4edda;
+}
+
+.notification-menu .avatar {
+  position: relative;
+}
+
+.notification-type-icon {
+  position: absolute;
+  bottom: -10px;
+  left: -14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 100px;
+  background-color: white;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.21);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
