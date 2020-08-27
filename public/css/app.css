@@ -10905,6 +10905,10 @@ a.text-dark:focus {
 }
 
 .card-module {
-  background-color: blue;
+  width: 320px;
+}
+
+.card-module-block {
+  border-bottom: 1px solid grey;
 }
 
