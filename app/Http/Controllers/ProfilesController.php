@@ -10,7 +10,7 @@ class ProfilesController extends Controller
     //
     public function show($user)
     {
-        $user = User::find($user);
+        $user = User::findOrFail($user);
 
         $join_date = $user->created_at->diffInDays(new \DateTime('now'));
 
