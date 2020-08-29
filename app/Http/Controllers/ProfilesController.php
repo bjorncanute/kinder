@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class ProfilesController extends Controller
 {
@@ -36,10 +37,21 @@ class ProfilesController extends Controller
             'tagline'  => '',
             'bio'      => '',
             'pronouns' => '',
-            'image'    => 'image',
+            'image'    => '',
         ]);
 
-        Auth()->user()->profile->update($data);
+
+        if (request('image')) {
+            $imagePath =request('image')->store('avatars', 'public');
+
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(300, 300);
+            $image->save();
+        }
+
+        Auth()->user()->profile->update(array_merge(
+            $data,
+            ['image' => $imagePath]
+        ));
 
         return redirect("/profile/{$user->id}");
     }

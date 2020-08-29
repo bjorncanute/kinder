@@ -20,6 +20,8 @@ class CreateProfilesTable extends Migration
             $table->string('tagline')->nullable();
             $table->string('pronouns')->nullable();
             $table->text('bio')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('banner')->nullable();
             
             $table->timestamps();
 
