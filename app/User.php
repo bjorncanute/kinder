@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function sketches()
+    {
+        return $this->hasMany(Sketch::class)->orderBy('created_at', 'DESC');
+    }
 }

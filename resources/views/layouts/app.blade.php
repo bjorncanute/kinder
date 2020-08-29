@@ -306,7 +306,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Submit</a>
+                                <a class="nav-link" href="/art/create">Submit</a>
                             </li>
 
                         @endguest

@@ -23,6 +23,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/profile/{user}/art/{sketch}', 'SketchesController@show');
+Route::get('/art/create', 'SketchesController@create');
+Route::post('/art',        'SketchesController@store');
