@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('watch/{user}', 'WatchingController@store');
+
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'ProfilesController@home')->name('home');
 

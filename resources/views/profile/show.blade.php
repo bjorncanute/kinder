@@ -61,7 +61,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">+ WATCH</a>
+                        <watch-button user-id="{{ $user->id }}"></watch-button>
                     </li>
                 </ul>
             </div>
