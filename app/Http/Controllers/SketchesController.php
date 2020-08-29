@@ -66,12 +66,15 @@ class SketchesController extends Controller
         return redirect('/profile/' . auth()->user()->id);
     }
 
-    public function show($user, $sketch)
+    public function show(\App\User $user, \App\Sketch $sketch)
     {
-        dd($sketch);
-        return view('sketch.show');
+        // dd($user, $sketch);
+        return view('sketches/show', [
+            'sketch' => $sketch,
+            'user'   => $user,
+        ]);
     }
-
+    
     public function createThumbnail($path, $width, $height)
     {
         $image = Image::make($path)->resize($width, $height, function($constraint) {

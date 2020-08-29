@@ -20,4 +20,27 @@ class ProfilesController extends Controller
             
         ]);
     }
+
+    public function edit(User $user)
+    {
+        $this->authorize('update', $user->profile);
+
+        return view('profile/edit', compact('user'));
+    }
+
+    public function update(User $user)
+    {
+        $this->authorize('update', $user->profile);
+
+        $data = request()->validate([
+            'tagline'  => '',
+            'bio'      => '',
+            'pronouns' => '',
+            'image'    => 'image',
+        ]);
+
+        Auth()->user()->profile->update($data);
+
+        return redirect("/profile/{$user->id}");
+    }
 }

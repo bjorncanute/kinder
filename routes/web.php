@@ -21,8 +21,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
-
 Route::get('/profile/{user}/art/{sketch}', 'SketchesController@show');
 Route::get('/art/create', 'SketchesController@create');
 Route::post('/art',        'SketchesController@store');
+
+
+
+Route::get('/profile/{user}',        'ProfilesController@show')->name('profile.show');
+Route::get('/profile/{user}/edit',   'ProfilesController@edit')->name('profile.edit');
+Route::patch('/profile/{user}', 'ProfilesController@update')->name('profile.update');

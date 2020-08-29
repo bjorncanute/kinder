@@ -304,10 +304,13 @@
                                 </div>
 
                             </li>
-
+                            
+                            @can('update', $user->profile)
                             <li class="nav-item">
                                 <a class="nav-link" href="/art/create">Submit</a>
                             </li>
+                            @endcan
+                            
 
                         @endguest
                     </ul>

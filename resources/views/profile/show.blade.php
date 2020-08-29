@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+    @can('update', $user->profile)
+        <a href="/profile/{{ $user->id }}/edit" class="btn btn-secondary">Edit Profile</a>
+    @endcan
     <div class="hero-section">
         <div class="hero-banner">
             <!-- hero banner should possibly be outside hero-secion -->
@@ -72,6 +75,7 @@
 
     
     <div class="container">
+        
         <section class="latest-carousel">
             
             <div class="gallery_row d-flex no-gutters" id="gallery_src">
