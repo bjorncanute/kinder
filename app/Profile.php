@@ -20,9 +20,19 @@ class Profile extends Model
         $imagePath = ($this->avatar) ? $this->avatar : 'avatars/default_avatar.svg';
         return '/storage/' . $imagePath;
     }
+
+    public function joinedDate(User $user)
+    {
+        return $user->created_at->diffInDays(new \DateTime('now'));
+    }
     
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function watchers()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

@@ -11,30 +11,24 @@ class ProfilesController extends Controller
     //
     public function home() 
     {
-        if (auth()->user()) {
-            $user = auth()->user();
-            $join_date = $user->created_at->diffInDays(new \DateTime('now'));
-
-            return view('profile.show', [
-                'user' => $user,
-                'join_date' => $join_date,
-            ]);
+        if (auth()->user()){
+            $user_id = auth()->user()->id;
+            return redirect("/profile/{$user_id}");
         } else {
-            return view('home');
+            return redirect("/login");
         }
     }
 
-    public function show($user)
+    public function show(User $user)
     {
-        $user = User::findOrFail($user);
+        $watching = (auth()->user()) ? auth()->user()->watching->contains($user->id) : false;
+    
+        return view('profile/show', compact('user', 'watching'));
+        // return view('profile/show', [
+        //     'user' => $user,
+        //     'watching' => false
+        // ]);
 
-        $join_date = $user->created_at->diffInDays(new \DateTime('now'));
-
-        return view('profile/show', [
-            'user' => $user,
-            'join_date' => $join_date,
-            
-        ]);
     }
 
     public function edit(User $user)
@@ -74,4 +68,5 @@ class ProfilesController extends Controller
 
         return redirect("/profile/{$user->id}");
     }
+
 }

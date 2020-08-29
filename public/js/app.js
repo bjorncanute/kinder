@@ -1915,15 +1915,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['userId'],
+  props: ['userId', 'watching'],
   mounted: function mounted() {
     console.log('Component mounted.');
   },
+  data: function data() {
+    return {
+      status: this.watching
+    };
+  },
   methods: {
     watchUser: function watchUser() {
+      var _this = this;
+
       axios.post('/watch/' + this.userId).then(function (response) {
-        alert(response.data);
+        _this.status = !_this.status;
+        console.log(response.data);
+      })["catch"](function (errors) {
+        if (errors.response.status == 401) {
+          window.location = '/login';
+        }
       });
+    }
+  },
+  computed: {
+    buttonText: function buttonText() {
+      return this.status ? 'WATCHING' : '+ WATCH';
     }
   }
 });
@@ -37513,11 +37530,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "button",
-      { staticClass: "btn btn-primary", on: { click: _vm.watchUser } },
-      [_vm._v("+ WATCH")]
-    )
+    _c("button", {
+      staticClass: "btn btn-primary",
+      domProps: { textContent: _vm._s(_vm.buttonText) },
+      on: { click: _vm.watchUser }
+    })
   ])
 }
 var staticRenderFns = []

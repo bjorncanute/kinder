@@ -7,8 +7,13 @@ use Illuminate\Http\Request;
 
 class WatchingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function store(User $user)
     {
-        return $user->username;
+        return auth()->user()->watching()->toggle($user->profile);
     }
 }

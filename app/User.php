@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Sketch::class)->orderBy('created_at', 'DESC');
     }
+
+    public function watching()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
 }

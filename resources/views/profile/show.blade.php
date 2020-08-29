@@ -61,7 +61,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <watch-button user-id="{{ $user->id }}"></watch-button>
+                        <watch-button user-id="{{ $user->id }}" watching="{{ $watching }}"></watch-button>
                     </li>
                 </ul>
             </div>
@@ -150,7 +150,7 @@
         <div class="quick-stats">
             <div class="birthday">BD</div>
             <div class="location">local</div>
-            <div class="join-date">Deviant for {{ $join_date ?? '' }} days.</div>
+            <div class="join-date">Deviant for {{ $user->profile->joinedDate($user) }} days.</div>
         </div>
 
         <div class="badges">
