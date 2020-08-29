@@ -36,19 +36,19 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="Pronouns" class="col-md-4 col-form-label text-md-right">Pronouns</label>
+                    <label for="pronouns" class="col-md-4 col-form-label text-md-right">Pronouns</label>
 
                     <div class="col-md-6">
-                        <input  id="Pronouns" 
+                        <input  id="pronouns" 
                                 type="text" 
-                                class="form-control @error('Pronouns') is-invalid @enderror" 
-                                name="Pronouns" 
-                                value="{{ old('Pronouns') ?? $user->profile->pronouns }}" 
+                                class="form-control @error('pronouns') is-invalid @enderror" 
+                                name="pronouns" 
+                                value="{{ old('pronouns') ?? $user->profile->pronouns }}" 
                                 required 
-                                autocomplete="Pronouns" 
+                                autocomplete="pronouns" 
                                 autofocus>
 
-                        @error('Pronouns')
+                        @error('pronouns')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -77,11 +77,11 @@
                 </div>
 
                 <div class="row">
-                    <label for="image" class="col-md-4 col-form-label text-md-right">Profile Image</label>
+                    <label for="avatar" class="col-md-4 col-form-label text-md-right">Profile avatar</label>
                     <div class="col-md-6">
-                        <input type="file" class="form-control-file" id="image" name="image">
+                        <input type="file" class="form-control-file" id="avatar" name="avatar">
 
-                        @error('image')
+                        @error('avatar')
                             <strong>{{ $message }}</strong>
                         @enderror
                     </div>

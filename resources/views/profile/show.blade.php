@@ -13,7 +13,7 @@
         <div class="media">
             <div class="profile-avatar"></div>
             <div class="media-body">
-                <h1>{{ $user->name }}</h1>
+                <h1>{{ $user->username }}</h1>
                 <span class="watchers">1.9k Watchers</span> | <span class="page-views">36.4k Page Views</span> | <span class="deviations">{{ $user->sketches->count() }} Deviations</span> <a href="#">chevron</a>
             </div>
         </div>

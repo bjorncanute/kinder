@@ -52,20 +52,21 @@ class ProfilesController extends Controller
             'tagline'  => '',
             'bio'      => '',
             'pronouns' => '',
-            'image'    => '',
+            'avatar'    => '',
         ]);
+        
+        $extantImage = auth()->user()->profile->avatar;
 
-
-        if (request('image')) {
-            $imagePath =request('image')->store('avatars', 'public');
+        if (request('avatar')) {
+            $imagePath = request('avatar')->store('avatars', 'public');
 
             $image = Image::make(public_path("storage/{$imagePath}"))->fit(300, 300);
             $image->save();
         }
 
-        Auth()->user()->profile->update(array_merge(
+        auth()->user()->profile->update(array_merge(
             $data,
-            ['image' => $imagePath]
+            ['avatar' => $imagePath ?? $extantImage]
         ));
 
         return redirect("/profile/{$user->id}");
