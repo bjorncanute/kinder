@@ -12,12 +12,13 @@ class Profile extends Model
      */
 
     protected $fillable = [
-        'tagline', 'bio', 'pronouns', 'image',
+        'avatar', 'banner', 'tagline', 'bio', 'pronouns', 'image',
     ];
     
     public function profileImage()
     {
-        // return ($this->image) ?? "/storage/{$this->image}" : 
+        $imagePath = ($this->avatar) ? $this->avatar : 'avatars/default_avatar.svg';
+        return '/storage/' . $imagePath;
     }
     
     public function user()

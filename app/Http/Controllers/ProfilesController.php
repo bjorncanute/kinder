@@ -54,19 +54,22 @@ class ProfilesController extends Controller
             'pronouns' => '',
             'avatar'    => '',
         ]);
-        
-        $extantImage = auth()->user()->profile->avatar;
 
+        
+        
         if (request('avatar')) {
             $imagePath = request('avatar')->store('avatars', 'public');
 
             $image = Image::make(public_path("storage/{$imagePath}"))->fit(300, 300);
             $image->save();
-        }
 
+            $imageArray = ['avatar' => $imagePath];
+        }
+        
+        
         auth()->user()->profile->update(array_merge(
             $data,
-            ['avatar' => $imagePath ?? $extantImage]
+            $imageArray ?? []
         ));
 
         return redirect("/profile/{$user->id}");
