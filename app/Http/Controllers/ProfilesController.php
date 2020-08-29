@@ -9,6 +9,21 @@ use Intervention\Image\Facades\Image;
 class ProfilesController extends Controller
 {
     //
+    public function home() 
+    {
+        if (auth()->user()) {
+            $user = auth()->user();
+            $join_date = $user->created_at->diffInDays(new \DateTime('now'));
+
+            return view('profile.show', [
+                'user' => $user,
+                'join_date' => $join_date,
+            ]);
+        } else {
+            return view('home');
+        }
+    }
+
     public function show($user)
     {
         $user = User::findOrFail($user);

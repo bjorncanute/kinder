@@ -19,7 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'ProfilesController@home')->name('home');
+
 
 Route::get('/art/create',  'SketchesController@create');
 Route::get('/profile/{user}/art/{sketch}', 'SketchesController@show');

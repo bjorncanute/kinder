@@ -149,7 +149,7 @@
         <div class="quick-stats">
             <div class="birthday">BD</div>
             <div class="location">local</div>
-            <div class="join-date">Deviant for {{ $join_date }} days.</div>
+            <div class="join-date">Deviant for {{ $join_date ?? '' }} days.</div>
         </div>
 
         <div class="badges">
