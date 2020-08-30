@@ -82,8 +82,8 @@
             <div class="gallery_row d-flex no-gutters" id="gallery_src">
                 
                 @foreach($user->sketches as $sketch)
-                <a href="/profile/{{ $sketch->user->id }}/art/{{ $sketch->id }}" class="image_thumbnail" style="margin: 1px">
-                    <img src="/storage/{{ $sketch->thumbnail }}" alt="" style="width: 100%; height: auto;">
+                <a href="/profile/{{ $sketch->user->id }}/art/{{ $sketch->id }}" class="sketch-item">
+                    <img class="sketch-item-image" src="/storage/{{ $sketch->thumbnail }}" alt="">
                 </a>
                 @endforeach
 
@@ -106,40 +106,12 @@
     </div>
 
     <script type="text/javascript">
-        
-        function moveRow() {                    
-            var image_thumbnails = gallery_src.getElementsByClassName('image_thumbnail');
-            // convert to ordinarry array: not a live updating array that will fuck you up!
-            image_thumbnails = [].slice.call(image_thumbnails, 0);
-
-            var viewport_width = 1000;
-            var row_width = 0;
-            var row_num = 0;
-            var rows = [
-                row_1, row_2, row_3, row_4,
-            ];
-            
-
-            for (const image of image_thumbnails) {
-                row_width += image.firstChild.naturalWidth;
-
-                console.log(image.firstChild.naturalWidth);
-                // row_2.appendChild(image);
-                rows[row_num].append(image);
-                if (row_width > viewport_width) {
-
-                    row_width = 0;
-                    row_num++;
-                }
-            }
-            
-        }
-
-
 
     </script>
 
-    <button class="btn btn-primary" type="button" onclick="moveRow();">REORDER</button>
+    <button id="move_row_btn" class="btn btn-primary" type="button" onclick="moveRow();">REORDER</button>
+
+   
     
     <section class="about-section">
         <h2>About {{ $user->name }}</h2>

@@ -54,26 +54,18 @@
 }
 
 
+/* === custom styling === */
+/* ====================== */
 
-
-
-
-
-
-
-
-
-
-
-
-
-.dummy {
-    width: 120px;
-    height: 300px;
-    background-color: black;
-    margin: 20px;
-    display: block;
+.sketch-item {
+    margin: 1px;
 }
-.latest-carosel {
-    
+.sketch-item-image {
+    width: 100%;
+    height: auto;
 }
+
+
+
+
+
