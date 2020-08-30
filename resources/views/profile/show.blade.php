@@ -15,7 +15,7 @@
             <img class="profile_avatar" width="100" height="100" src="{{ $user->profile->profileImage() }}" alt="">
             <div class="media-body">
                 <h1>{{ $user->username }}</h1>
-                <span class="watchers">1.9k Watchers</span> | <span class="page-views">36.4k Page Views</span> | <span class="deviations">{{ $user->sketches->count() }} Deviations</span> <a href="#">chevron</a>
+                <span class="watchers">{{ $user->profile->watchers->count() }} Watchers</span> | <span class="page-views">36.4k Page Views</span> | <span class="deviations">{{ $user->sketches->count() }} Deviations</span> <a href="#">chevron</a>
             </div>
         </div>
 
