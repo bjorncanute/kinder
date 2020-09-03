@@ -14,4 +14,11 @@ class Sketch extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function collections()
+    {
+        return $this->belongsToMany(Collection::class);
+        // return $this->belongsToMany('App\Collection')->withTimestamps();
+
+    }
 }
