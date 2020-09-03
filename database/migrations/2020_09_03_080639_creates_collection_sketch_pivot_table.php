@@ -17,7 +17,7 @@ class CreatesCollectionSketchPivotTable extends Migration
             $table->id();
             $table->unsignedBigInteger('collection_id');
             $table->unsignedBigInteger('sketch_id');
-            $table->unsignedBigInteger('order')->nullable();
+            // $table->unsignedBigInteger('order')->nullable();
             $table->timestamps();
         });
     }
