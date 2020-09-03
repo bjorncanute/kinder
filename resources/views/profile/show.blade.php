@@ -105,9 +105,7 @@
         </section>
     </div>
 
-    <script type="text/javascript">
-
-    </script>
+    
 
     <button id="move_row_btn" class="btn btn-primary" type="button" onclick="moveRow();">REORDER</button>
 
