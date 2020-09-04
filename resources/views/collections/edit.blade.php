@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <form action="/collections" enctype="multipart/form-data" method="post">
+    <form action="/art" enctype="multipart/form-data" method="post">
 
         @csrf
 
@@ -10,11 +10,11 @@
             <div class="col-8 offset-2">
 
                 <div class="row">
-                    <h1>Create New Collection</h1>
+                    <h1>Add New Sketch</h1>
                 </div>
             
                 <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">Collection Name</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-right">Deviant name</label>
 
                     <div class="col-md-6">
                         <input  id="name" 

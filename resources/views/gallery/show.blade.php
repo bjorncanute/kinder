@@ -101,12 +101,20 @@
                     <a href="/{{ $user->username }}/gallery/{{$collection->id}}" class="collection-item {{ (request()->segment(3) == $collection->id) ? 'selected' : ''}}">
                         
                         <div class="thumbnail-image">
-                            <img src="/storage/{{ $collection->sketches->first()->thumbnail }}" alt="">
+                            <img src="/storage/{{ $collection->sketches->first()->thumbnail ?? '' }}" alt="">
                         </div>
                         <div class="collection-name">{{ $collection->name }}</div>
                         <div class="number-of-sketches">2846 deviations</div>
                     </a>
                 @endforeach
+
+                <a href="/collections/create" class="collection-item">
+                    
+                    <div class="thumbnail-image">
+                        <div class="plus" style="font-size:70px;text-align:center;line-height:80px;">+</div>
+                    </div>
+                    <div class="collection-name">Add Collection</div>
+                </a>
             </div>
 
         </section>

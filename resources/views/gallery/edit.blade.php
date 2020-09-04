@@ -1,98 +1,53 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <form action="/profile/{{ $user->id }}" enctype="multipart/form-data" method="post">
+<div class="popup-blackout" style="background:black;position:absolute;top:90px;bottom:0;left:0;right:0;">
+    <form action="/{{$user->username}}/gallery/{{ $selectedCollection->id }}" enctype="multipart/form-data" method="post">
 
     @csrf
     @method('PATCH')
+        <div class="container collection-edit-model">
 
-        <div class="row">
-            <div class="col-8 offset-2">
+            <div class="header">
+                <h1>Gallery</h1>
+            </div>
 
-                <div class="row">
-                    <h1>Edit Profile</h1>
-                </div>
+            <div class="model-body d-flex">
             
-                <div class="form-group row">
-                    <label for="tagline" class="col-md-4 col-form-label text-md-right">Tagline</label>
+                <div class="content-view">
 
-                    <div class="col-md-6">
-                        <input  id="tagline" 
+                </div>
+
+                <div class="collection-details">
+                    <img src="{{$selectedCollection->coverImage ?? ''}}" alt="">
+                    <div class="form_input">
+                        <label for="name">Collection Title</label>
+                        <input  id="name" 
                                 type="text" 
-                                class="form-control @error('tagline') is-invalid @enderror" 
-                                name="tagline" 
-                                value="{{ old('tagline') ?? $user->profile->tagline }}" 
+                                class="form-control @error('name') is-invalid @enderror" 
+                                name="name" 
+                                value="{{ old('name') ?? $selectedCollection->name }}" 
                                 required 
-                                autocomplete="tagline" 
+                                autocomplete="name" 
                                 autofocus>
 
-                        @error('tagline')
+                        @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <label for="pronouns" class="col-md-4 col-form-label text-md-right">Pronouns</label>
 
-                    <div class="col-md-6">
-                        <input  id="pronouns" 
-                                type="text" 
-                                class="form-control @error('pronouns') is-invalid @enderror" 
-                                name="pronouns" 
-                                value="{{ old('pronouns') ?? $user->profile->pronouns }}" 
-                                required 
-                                autocomplete="pronouns" 
-                                autofocus>
-
-                        @error('pronouns')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="bio" class="col-md-4 col-form-label text-md-right">Short Bio</label>
-
-                    <div class="col-md-6">
-                        <textarea   id="bio" 
-                                    type="textarea" 
-                                    class="form-control @error('bio') is-invalid @enderror" 
-                                    name="bio"
-                                    rows="4" 
-                                    autocomplete="bio">{{ old('bio') ?? $user->profile->bio }}
-                        </textarea>
-
-                        @error('bio')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="row">
-                    <label for="avatar" class="col-md-4 col-form-label text-md-right">Profile avatar</label>
-                    <div class="col-md-6">
-                        <input type="file" class="form-control-file" id="avatar" name="avatar">
-
-                        @error('avatar')
-                            <strong>{{ $message }}</strong>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="row pt-4">
-                    <button class="btn btn-primary ml-auto">Save Profile</button>
-                </div>
-
+            
+            <div class="submit_button">
+                <button class="btn btn-primary ml-auto">Save Profile</button>
             </div>
         </div>
+
+        
     </form>  
 </div>
 @endsection

@@ -4,22 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Collection;
+use App\User;
 
 
 class CollectionsController extends Controller
 {
-    //
-
-    public function addToCollection($collection_id, $sketch_id)
+    public function __construct()
     {
-        // $user = auth()->user();
-        // $user->collection
-        // $collection = \App\Collection::find($collection_id);
-        // $collection->sketches()->attach($sketch_id);
+        $this->middleware('auth', ['except' => ['show']]);
     }
 
     public function create()
     {
+        // $user = auth()->user();
+        
+        // return view('collections.create', compact('user'));
         return view('collections.create');
     }
 

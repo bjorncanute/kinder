@@ -7,11 +7,23 @@ use Intervention\Image\Facades\Image;
 
 class SketchesController extends Controller
 {
+    
+    
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['show']]);
     }
 
+    public function show(\App\User $user, \App\Sketch $sketch)
+    {
+        // $this->middleware('auth');
+        // dd($user, $sketch);
+        return view('sketches/show', [
+            'sketch' => $sketch,
+            'user'   => $user,
+        ]);
+    }
+    
     public function create()
     {
         return view('sketches.create');
@@ -66,14 +78,7 @@ class SketchesController extends Controller
         return redirect('/profile/' . auth()->user()->id);
     }
 
-    public function show(\App\User $user, \App\Sketch $sketch)
-    {
-        // dd($user, $sketch);
-        return view('sketches/show', [
-            'sketch' => $sketch,
-            'user'   => $user,
-        ]);
-    }
+    
     
     public function createThumbnail($path, $width, $height)
     {

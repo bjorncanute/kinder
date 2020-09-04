@@ -11018,7 +11018,7 @@ a.text-dark:focus {
   width: 150px;
   height: 80px;
   overflow: hidden;
-  background: green;
+  background: #555;
 }
 
 .collection-item .thumbnail-image img {
@@ -11055,5 +11055,9 @@ a.text-dark:focus {
 
 .collection-block {
   margin-top: 20px;
+}
+
+.collection-edit-model {
+  background-color: white;
 }
 

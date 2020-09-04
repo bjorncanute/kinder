@@ -97,7 +97,7 @@
 }
 
 .collection-item .thumbnail-image {
-    width: 150px; height: 80px; overflow: hidden; background:green;
+    width: 150px; height: 80px; overflow: hidden; background:#555;
 }
 
 .collection-item .thumbnail-image img {
@@ -135,4 +135,12 @@
 
 .collection-block {
     margin-top: 20px;
+}
+
+
+.collection-edit-model {
+    background-color: white;
+}
+.collection-edit-model .model-body {
+    // display: flexbox;
 }

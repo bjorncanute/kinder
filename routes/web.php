@@ -41,3 +41,5 @@ Route::get('/collections/{collection}', 'CollectionsController@show');
 
 
 Route::get('/{username}/gallery/{collection?}',        'GalleryController@show')->name('gallery.show');
+Route::get('/{username}/gallery/{collection}/edit',    'GalleryController@edit')->name('gallery.edit');
+
