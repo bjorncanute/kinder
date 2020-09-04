@@ -87,7 +87,7 @@
 
             <div class="collection-list d-flex">
 
-                <a href="#" class="collection-item">
+                <a href="/{{ $user->username }}/gallery/" class="collection-item {{ (request()->segment(3) == null) ? 'selected' : '' }}">
                     
                     <div class="thumbnail-image">
                         <img src="/storage/{{ $user->sketches->first()->thumbnail }}" alt="">
@@ -98,7 +98,7 @@
 
 
                 @foreach($user->collections as $collection)
-                    <a href="/collections/{{$collection->id}}" class="collection-item">
+                    <a href="/{{ $user->username }}/gallery/{{$collection->id}}" class="collection-item {{ (request()->segment(3) == $collection->id) ? 'selected' : ''}}">
                         
                         <div class="thumbnail-image">
                             <img src="/storage/{{ $collection->sketches->first()->thumbnail }}" alt="">
@@ -126,7 +126,7 @@
             <div class="collection-block">
                 <div class="gallery-default d-flex no-gutters" id="gallery_src">
                 
-                @foreach($user->sketches as $sketch)
+                @foreach($selectedCollection->sketches as $sketch)
                     <a href="/profile/{{ $sketch->user->id }}/art/{{ $sketch->id }}" class="sketch-item">
                         <img class="sketch-item-image" src="/storage/{{ $sketch->thumbnail }}" alt="">
                     </a>

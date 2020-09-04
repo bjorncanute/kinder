@@ -1,11 +1,24 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
+@font-face{
+    font-family:devioussans02bold;
+    src:url(https://st.deviantart.net/fonts/devioussans-02-bold.woff2) format("woff2"),url(https://st.deviantart.net/fonts/devioussans-02-bold.woff) format("woff");
+    font-weight:400;
+    font-style:normal
+}
+@font-face{font-family:devioussans02extrabold;src:url(https://st.deviantart.net/fonts/devioussans-02-extrabold.woff2) format("woff2"),url(https://st.deviantart.net/fonts/devioussans-02-extrabold.woff) format("woff");font-weight:400;font-style:normal}
+@font-face{font-family:devioussans02light;src:url(https://st.deviantart.net/fonts/devioussans-02-light.woff2) format("woff2"),url(https://st.deviantart.net/fonts/devioussans-02-light.woff) format("woff");font-weight:400;font-style:normal}
+@font-face{font-family:devioussans02medium;src:url(https://st.deviantart.net/fonts/devioussans-02-medium.woff2) format("woff2"),url(https://st.deviantart.net/fonts/devioussans-02-medium.woff) format("woff");font-weight:400;font-style:normal}
+@font-face{font-family:devioussans02regular;src:url(https://st.deviantart.net/fonts/devioussans-02-regular.woff2) format("woff2"),url(https://st.deviantart.net/fonts/devioussans-02-regular.woff) format("woff");font-weight:400;font-style:normal}
+
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
 
 
 .user-menu .dropdown-menu {
@@ -65,11 +78,22 @@
     height: auto;
 }
 
+.default-gallery .sketch-item-image {
+    width: auto;
+    height: 200px;
+}
+
 
 
 .collection-item {
     margin-left: 15px;
-    background: rgb(138, 125, 125); padding: 20px; color: white;
+    background: rgb(138, 125, 125); 
+    padding: 20px; 
+    color: white;
+}
+
+.collection-item.selected {
+    background: rgb(93, 82, 82); 
 }
 
 .collection-item .thumbnail-image {
@@ -89,5 +113,26 @@
 }
 
 .collection-list {
+    margin-top: 20px;
+}
+
+.collection-controls {
+    margin-top: 20px;
+}
+
+.edit-button {
+    font-family: devioussans02extrabold, sans-serif;
+    font-weight:400;
+    font-size:11px;
+    line-height:16px;
+    letter-spacing:1.3px;
+    text-transform:uppercase;
+    color: purple;
+
+    margin-left: 20px;
+    padding: 5px;
+}
+
+.collection-block {
     margin-top: 20px;
 }

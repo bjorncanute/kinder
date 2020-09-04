@@ -38,3 +38,6 @@ Route::patch('/profile/{user}',      'ProfilesController@update')->name('profile
 Route::get('/collections/create',       'CollectionsController@create');
 Route::post('/collections',             'CollectionsController@store');
 Route::get('/collections/{collection}', 'CollectionsController@show');
+
+
+Route::get('/{username}/gallery/{collection?}',        'GalleryController@show')->name('gallery.show');

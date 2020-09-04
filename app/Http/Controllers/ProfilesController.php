@@ -24,10 +24,6 @@ class ProfilesController extends Controller
         $watching = (auth()->user()) ? auth()->user()->watching->contains($user->id) : false;
     
         return view('profile/show', compact('user', 'watching'));
-        // return view('profile/show', [
-        //     'user' => $user,
-        //     'watching' => false
-        // ]);
 
     }
 
