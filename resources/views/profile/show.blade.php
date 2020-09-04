@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     @can('update', $user->profile)
         <a href="/profile/{{ $user->id }}/edit" class="btn btn-secondary">Edit Profile</a>
     @endcan
@@ -21,7 +21,7 @@
 
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         
-            <div class="container">
+            <div class="container-fluid">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto p-1">
                     <li class="nav-item">
@@ -75,9 +75,43 @@
     </div>
 
     
-    <div class="container">
+    <div class="container-fluid">
         
-        <section class="latest-carousel">
+        <section class="collection-select">
+            <nav class="gallery-nav d-flex">
+                <h2 class="label">Collections</h2>
+                <a href="#" class="btn btn-outline-dark">Edit</a>
+                <a href="#" class="btn btn-outline-dark ml-auto">Search</a>
+    
+            </nav>
+
+            <div class="collection-list d-flex">
+
+                <a href="#" class="collection-item">
+                    
+                    <div class="thumbnail-image">
+                        <img src="/storage/{{ $user->sketches->first()->thumbnail }}" alt="">
+                    </div>
+                    <div class="collection-name">All</div>
+                    <div class="number-of-sketches">2846 deviations</div>
+                </a>
+
+
+                @foreach($user->collections as $collection)
+                    <a href="/collections/{{$collection->id}}" class="collection-item">
+                        
+                        <div class="thumbnail-image">
+                            <img src="/storage/{{ $collection->sketches->first()->thumbnail }}" alt="">
+                        </div>
+                        <div class="collection-name">{{ $collection->name }}</div>
+                        <div class="number-of-sketches">2846 deviations</div>
+                    </a>
+                @endforeach
+            </div>
+
+        </section>
+        
+        <section class="selected-gallery">
             
             <div class="gallery_row d-flex no-gutters" id="gallery_src">
                 

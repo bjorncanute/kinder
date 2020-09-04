@@ -49877,7 +49877,7 @@ function moveRow() {
   var image_thumbnails = gallery_src.getElementsByClassName('sketch-item'); // convert to ordinarry array: not a live updating array that will fuck you up!
 
   image_thumbnails = [].slice.call(image_thumbnails, 0);
-  var viewport_width = 1000;
+  var viewport_width = 2000;
   var row_width = 0;
   var row_num = 0;
   var rows = [row_1, row_2, row_3, row_4];

@@ -10963,3 +10963,33 @@ a.text-dark:focus {
   height: auto;
 }
 
+.collection-item {
+  margin-left: 15px;
+  background: #8a7d7d;
+  padding: 20px;
+  color: white;
+}
+
+.collection-item .thumbnail-image {
+  width: 150px;
+  height: 80px;
+  overflow: hidden;
+  background: green;
+}
+
+.collection-item .thumbnail-image img {
+  width: 100%;
+}
+
+.gallery-nav {
+  margin-top: 10px;
+}
+
+.gallery-nav .btn {
+  margin-left: 20px;
+}
+
+.collection-list {
+  margin-top: 20px;
+}
+

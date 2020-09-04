@@ -3,7 +3,7 @@ function moveRow() {
     // convert to ordinarry array: not a live updating array that will fuck you up!
     image_thumbnails = [].slice.call(image_thumbnails, 0);
 
-    var viewport_width = 1000;
+    var viewport_width = 2000;
     var row_width = 0;
     var row_num = 0;
     var rows = [
