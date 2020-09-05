@@ -32,6 +32,8 @@ class GalleryController extends Controller
         $user = User::where('username', $username)->first();
         $selectedCollection = Collection::find($collection);
 
-        return view('gallery.edit', compact('user', 'selectedCollection'));
+        return view('gallery.edit_collection', compact('user', 'selectedCollection'));
     }
+
+    
 }

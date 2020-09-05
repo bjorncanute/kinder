@@ -28,6 +28,7 @@ Route::get('/home', 'ProfilesController@home')->name('home');
 Route::get('/art/create',  'SketchesController@create');
 Route::get('/profile/{user}/art/{sketch}', 'SketchesController@show');
 Route::post('/art',        'SketchesController@store');
+Route::delete('sketches/{sketch}', 'SketchesController@destroy');
 
 
 
@@ -38,6 +39,7 @@ Route::patch('/profile/{user}',      'ProfilesController@update')->name('profile
 Route::get('/collections/create',       'CollectionsController@create');
 Route::post('/collections',             'CollectionsController@store');
 Route::get('/collections/{collection}', 'CollectionsController@show');
+Route::post('/collections/{collection}/add/',        'CollectionsController@add_sketch');
 
 
 Route::get('/{username}/gallery/{collection?}',        'GalleryController@show')->name('gallery.show');

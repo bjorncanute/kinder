@@ -138,6 +138,12 @@
                     <a href="/profile/{{ $sketch->user->id }}/art/{{ $sketch->id }}" class="sketch-item">
                         <img class="sketch-item-image" src="/storage/{{ $sketch->thumbnail }}" alt="">
                     </a>
+<!--                     
+                    <form action="/sketches/{{ $sketch->id }}" method="POST">
+                        {{ csrf_field() }}
+                        {{!! method_field('delete') !!}}
+                        <button type="submit" class="btn btn-danger">DELETE</button>
+                    </form> -->
                 @endforeach
                 
                 </div>

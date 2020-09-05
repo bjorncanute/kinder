@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Sketch;
 use Intervention\Image\Facades\Image;
+use Redirect;
+
 
 class SketchesController extends Controller
 {
@@ -76,6 +79,15 @@ class SketchesController extends Controller
         ]);
 
         return redirect('/profile/' . auth()->user()->id);
+    }
+
+    public function destroy(Sketch $sketch)
+    {
+
+        $sketch->delete();
+
+        // return redirect('/home');
+        return Redirect::back()->with('message','Operation Successful !');
     }
 
     

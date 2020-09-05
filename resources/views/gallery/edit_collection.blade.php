@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="popup-blackout" style="background:black;position:absolute;top:90px;bottom:0;left:0;right:0;">
-    <form action="/{{$user->username}}/gallery/{{ $selectedCollection->id }}" enctype="multipart/form-data" method="post">
+    <!-- <form action="/{{$user->username}}/gallery/{{ $selectedCollection->id }}" enctype="multipart/form-data" method="post"> -->
 
-    @csrf
-    @method('PATCH')
+    <!-- @csrf -->
+    <!-- @method('PATCH') -->
         <div class="container collection-edit-model mt-5">
 
             <div class="header" style="height:110px;">
@@ -21,7 +21,26 @@
                             <li class="breadcrumb-item active">{{ $selectedCollection->name }}</li>
                         </ol>
 
-                        <button class="btn btn-outline-dark mr-auto" style="height: 40px;">+ Add Deviations</button>
+                        <form action="/collections/{{ $selectedCollection->id }}/add/" method="post">
+                            @csrf
+                            <label for="sketch_id">Collection Title</label>
+                            <input  id="sketch_id" 
+                                    type="text" 
+                                    class="form-control @error('sketch_id') is-invalid @enderror" 
+                                    name="sketch_id" 
+                                    value="{{ old('sketch_id') ?? $selectedCollection->sketch_id }}" 
+                                    required 
+                                    autocomplete="sketch_id" 
+                                    autofocus>
+
+                            @error('sketch_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            
+                            <button class="btn btn-outline-dark mr-auto" style="height: 40px;">+ Add Deviations</button>
+                        </form>
                     </nav>
                     <p>Add new deviations and drag to reorder them. You can also edit your Collection info.</p>
 
@@ -67,7 +86,15 @@
             </div>
         </div>
 
+        <hr>
+
+        <div class="container" style="background: white;">
+            <h3>New Vue Component version</h3>
+
+            <table-draggable :sketches="{{$selectedCollection->sketches}}"></table-draggable>
+        </div>
+
         
-    </form>  
+    <!-- </form>   -->
 </div>
 @endsection

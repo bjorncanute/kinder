@@ -22,6 +22,8 @@ window.Vue = require('vue');
 
 Vue.component('watch-button', require('./components/WatchButton.vue').default);
 
+Vue.component('table-draggable', require('./components/TableDraggable.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
