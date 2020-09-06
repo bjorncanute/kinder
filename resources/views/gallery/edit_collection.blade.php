@@ -38,22 +38,16 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                            
+                            <modal-login></modal-login>
+
                             <button class="btn btn-outline-dark mr-auto" style="height: 40px;">+ Add Deviations</button>
                         </form>
                     </nav>
                     <p>Add new deviations and drag to reorder them. You can also edit your Collection info.</p>
 
-                    <div class="collection-sketches-block">
-                        @foreach($selectedCollection->sketches as $sketch)
-                        <div class="sketch-item" style="margin:10px;float:left;">
-                            <div class="thumbnail-image" style="height: 120px; width: 180px; overflow: hidden; position: relative">
-                                <img src="/storage/{{ $sketch->thumbnail ?? '' }}" alt="" width="100%">
-                                <div class="corner-order-number" style="position: absolute;top:0;left:0;width:40px;height:40px;background:white;text-align:center;line-height:40px;">1</div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
+                    <table-draggable :collection="{{$selectedCollection}}"
+                             :sketches="{{$selectedCollection->sketches}}"
+                             :collections_list="{{$user->collections}}"></table-draggable>
                     
                 </div>
 
@@ -84,15 +78,27 @@
             <div class="submit_button">
                 <button class="btn btn-primary ml-auto">Save Profile</button>
             </div>
+            
+
+
+           
+
+
+
+
         </div>
 
         <hr>
 
-        <div class="container" style="background: white;">
+  <!-- use the modal component, pass in the prop -->
+        
+        <!-- <div class="container" style="background: white;">
             <h3>New Vue Component version</h3>
 
-            <table-draggable :sketches="{{$selectedCollection->sketches}}"></table-draggable>
-        </div>
+            <table-draggable :collection="{{$selectedCollection}}"
+                             :sketches="{{$selectedCollection->sketches}}"
+                             :collections_list="{{$user->collections}}"></table-draggable>
+        </div> -->
 
         
     <!-- </form>   -->

@@ -19,8 +19,10 @@ class Collection extends Model
 
     public function sketches()
     {
-        return $this->belongsToMany(Sketch::class);
+        // return $this->belongsToMany(Sketch::class);
         // return $this->belongsToMany('App\Sketch')->withPivot('order')->withTimestamps();
+        return $this->belongsToMany(Sketch::class)->withPivot('order');
+
 
     }
 }

@@ -27,8 +27,14 @@ function moveRow() {
 }
 
 window.onload = function() {
-    document.getElementById('move_row_btn').onclick = function () {
-        moveRow();
+    var row = document.getElementById('move_row_btn');
+    if (row) {
+        row.onclick = function () {
+            moveRow();
+        }
     }
+    // document.getElementById('move_row_btn').onclick = function () {
+    //     moveRow();
+    // }
 }
 

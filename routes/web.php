@@ -40,6 +40,14 @@ Route::get('/collections/create',       'CollectionsController@create');
 Route::post('/collections',             'CollectionsController@store');
 Route::get('/collections/{collection}', 'CollectionsController@show');
 Route::post('/collections/{collection}/add/',        'CollectionsController@add_sketch');
+// Route::post('/collections/removeSketch/{collection}/{sketch}/',   'CollectionsController@removeSketch');
+Route::post('/collections/removeSketch',   'CollectionsController@removeSketch');
+
+
+Route::patch('/collections/copySketch/{collection}/{sketch}/',   'CollectionsController@copySketch');
+
+Route::post('/collections/{src}/{dst}/moveSketch',               'CollectionsController@moveSketch');
+Route::patch('/collections/updateAll',    'CollectionsController@updateAll');
 
 
 Route::get('/{username}/gallery/{collection?}',        'GalleryController@show')->name('gallery.show');

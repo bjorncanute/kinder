@@ -34,6 +34,8 @@ class SketchesController extends Controller
 
     public function store()
     {
+
+        // dd(request());
         $data = request()->validate([
             'description' => '',
             'title' => 'required',
@@ -78,7 +80,9 @@ class SketchesController extends Controller
             'thumbnail' => $thumbPath,
         ]);
 
-        return redirect('/profile/' . auth()->user()->id);
+        // return redirect('/profile/' . auth()->user()->id);
+        return Redirect::back()->with('message','Operation Successful !');
+
     }
 
     public function destroy(Sketch $sketch)

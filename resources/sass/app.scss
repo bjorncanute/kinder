@@ -18,6 +18,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Multi-level dropdown
+@import 'dropdown';
+
 
 
 
@@ -144,3 +147,49 @@
 .collection-edit-model .model-body {
     // display: flexbox;
 }
+
+.update-collection .sketch-item {
+    position: relative;
+    background-color: red;
+}
+.corner-dropdown {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    transition: ease-in 0.1s opacity;
+
+}
+.sketch-item:hover .corner-dropdown {
+    opacity: 1;
+}
+
+.update-collection .sketch-item .fade-block {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transition: ease-in 0.1s opacity;
+    background-image: linear-gradient(180deg, transparent, white);
+    opacity: 0;
+}
+
+
+.update-collection .sketch-item:hover .fade-block {
+    opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
