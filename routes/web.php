@@ -53,3 +53,9 @@ Route::patch('/collections/updateAll',    'CollectionsController@updateAll');
 Route::get('/{username}/gallery/{collection?}',        'GalleryController@show')->name('gallery.show');
 Route::get('/{username}/gallery/{collection}/edit',    'GalleryController@edit')->name('gallery.edit');
 
+
+
+// vue json routes
+Route::get('collections_json', 'CollectionsController@get');
+Route::get('sketches_json', 'CollectionsController@getSketches');
+Route::patch('collections/add', 'CollectionsController@add');

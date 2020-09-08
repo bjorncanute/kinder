@@ -1,4 +1,6 @@
 import VModal from 'vue-js-modal';
+// import axios from 'axios';
+
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -28,7 +30,7 @@ Vue.component('watch-button', require('./components/WatchButton.vue').default);
 Vue.component('table-draggable', require('./components/TableDraggable.vue').default);
 
 
-Vue.component('modal-login', require('./components/ModalLogin.vue').default);
+Vue.component('modal-add-sketch', require('./components/ModalAddSketch.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -123,12 +123,12 @@
             <div class="collection-controls d-flex">
                 <div class="select-collection-btn">SELECTED</div>
                 <div class="comment-count">|  Comments 0</div>
-                <button class="btn btn-outline-dark edit-button d-flex" style="height:32px;">
+                <a href="{{ request()->url() }}/edit" class="btn btn-outline-dark edit-button d-flex" style="height:32px;">
                     <span class="icon edit-icon" style="height: 24px; width: 24px;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.389 6.4503l-3-3-1.46-1.45-1.41 1.42-11.52 11.58-1 .97v6.03h5.987l1.013-1 11.41-11.76 1.39-1.41-1.41-1.38zm-4.45-1.62l3 3-.88.87-3-3 .88-.87zm.74 5.33l-8.21 8.2-2.801-3.0118 8.0028-8.099 3.0083 2.9108zm-12.68 9.84v-3.17l3.0433 3.17H3.9991z"></path></svg>
                     </span>
                     <span>Edit</span>
-                </button>
+                </a>
             </div>
             
             <div class="collection-block">

@@ -123,4 +123,35 @@ class CollectionsController extends Controller
             'collection' => $collection
         ]);
     }
+
+
+    public function get()
+    {
+        $user_id = auth()->user()->id;
+        $collections = Collection::where('user_id', $user_id)->get();
+        return response()->json($collections);
+
+    }
+
+    public function getSketches()
+    {
+        // $collection_id = request()->data('collection_id');
+        $collection = Collection::findOrFail(request()->collection_id);
+        // $collection = Collection::find($collection_id);
+        $sketches = $collection->sketches;
+        return response()->json($collection->sketches);
+    }
+
+    public function add(Request $request)
+    {
+        // $sketches = $request->sketches;
+        $collection = Collection::findOrFail(request()->collection);
+
+        foreach($sketches as $sketch) {
+            $collection->sketches()->attach($sketch);
+        }
+        return response(sketches, 200);
+
+
+    }
 }

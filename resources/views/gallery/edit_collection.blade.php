@@ -38,7 +38,7 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                            <modal-login></modal-login>
+                            <modal-add-sketch></modal-add-sketch>
 
                             <button class="btn btn-outline-dark mr-auto" style="height: 40px;">+ Add Deviations</button>
                         </form>
