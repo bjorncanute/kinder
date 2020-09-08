@@ -95,15 +95,6 @@ class CollectionsController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
     public function moveSketch(Collection $src, Collection $dst)
     {
         $sketch = request()->sketch;
@@ -135,22 +126,28 @@ class CollectionsController extends Controller
 
     public function getSketches()
     {
-        // $collection_id = request()->data('collection_id');
         $collection = Collection::findOrFail(request()->collection_id);
-        // $collection = Collection::find($collection_id);
         $sketches = $collection->sketches;
         return response()->json($collection->sketches);
     }
 
-    public function add(Request $request)
+    public function addToCollection()
     {
-        // $sketches = $request->sketches;
+        $sketches = request()->sketches;
+
+
         $collection = Collection::findOrFail(request()->collection);
 
+        $order = $collection->sketches()->count();
+        $order++;
+
         foreach($sketches as $sketch) {
-            $collection->sketches()->attach($sketch);
+            $collection->sketches()->attach($sketch, ['order' => $order]);
+            $order++;
         }
-        return response(sketches, 200);
+
+      return response($sketches, 200);
+        
 
 
     }

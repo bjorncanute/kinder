@@ -17,14 +17,6 @@
 
         <div class="body">
             <div class="collections-select">
-<!-- 
-                <a href="#" class="collection-box">
-                    <img src="" alt="">
-                    <div class="nav-item">All</div>
-                    <div class="number-of-deviations">2846 deviations</div>
-                </a>
-                 -->
-                <a href="#"></a>
 
 
                 <!-- <button class="btn btn-primary" @click="getSketches()" v-text="dynamic"></button> -->
@@ -52,7 +44,7 @@
                         :class="'sketch-item ' + isSelected(data.id)" 
                         v-for="data in dynamic" 
                         :key="data.id"
-                        @click="addOrRemove(data.id); active = !active">
+                        @click="addOrRemove(data.id);">
                         <div class="thumbnail-image" style="height: 120px; width: 187px; overflow: hidden; position: relative">
                             <img :src="'/storage/' + data.thumbnail" alt="" width="100%" style="width: 187px; height: 120px; object-fit: cover; object-position: 50% -19.5812px;">
                         </div>
@@ -107,35 +99,13 @@ export default {
             }
         },
         addToCollection() {
-            axios.patch('/collections/add/', {
-                data: {
-                    sketches: this.selected,
-                    collection: 1
-                }
-                // headers: {
-                //     'Content-Type': 'application/json',
-                // }
+            axios.post('/addToCollection', {
+                collection: 1,
+                sketches: this.selected
             })
         },
+
         getSketches () {
-            // axios.get('/collections_json').than(response => { 
-            //     this.sketches = response
-            //     // console.log(response.data);
-            // });
-            // this.console.log("hello");\
-
-
-
-
-            // axios.get('/collections_json', {
-                
-            // })
-            // .than(response => {
-            //     this.sketches = response.data;
-            // });
-
-
-            // axios.get('/collections_json/')
             axios.get('/sketches_json/', {
                 params: {
                     collection_id: 2

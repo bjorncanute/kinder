@@ -58,4 +58,8 @@ Route::get('/{username}/gallery/{collection}/edit',    'GalleryController@edit')
 // vue json routes
 Route::get('collections_json', 'CollectionsController@get');
 Route::get('sketches_json', 'CollectionsController@getSketches');
-Route::patch('collections/add', 'CollectionsController@add');
+Route::get('/collections/addToCollection', 'CollectionsController@addToCollection');
+
+
+Route::get('/bob', 'CollectionsController@addToCollection');
+Route::post('/addToCollection', 'CollectionsController@addToCollection');

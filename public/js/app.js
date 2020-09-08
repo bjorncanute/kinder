@@ -1973,14 +1973,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2016,30 +2008,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     addToCollection: function addToCollection() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch('/collections/add/', {
-        data: {
-          sketches: this.selected,
-          collection: 1
-        } // headers: {
-        //     'Content-Type': 'application/json',
-        // }
-
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/addToCollection', {
+        collection: 1,
+        sketches: this.selected
       });
     },
     getSketches: function getSketches() {
       var _this = this;
 
-      // axios.get('/collections_json').than(response => { 
-      //     this.sketches = response
-      //     // console.log(response.data);
-      // });
-      // this.console.log("hello");\
-      // axios.get('/collections_json', {
-      // })
-      // .than(response => {
-      //     this.sketches = response.data;
-      // });
-      // axios.get('/collections_json/')
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/sketches_json/', {
         params: {
           collection_id: 2
@@ -41594,8 +41570,6 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "body" }, [
             _c("div", { staticClass: "collections-select" }, [
-              _c("a", { attrs: { href: "#" } }),
-              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "sketches-select d-flex" },
@@ -41608,8 +41582,7 @@ var render = function() {
                       attrs: { value: data.id },
                       on: {
                         click: function($event) {
-                          _vm.addOrRemove(data.id)
-                          _vm.active = !_vm.active
+                          return _vm.addOrRemove(data.id)
                         }
                       }
                     },

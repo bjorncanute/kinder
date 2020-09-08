@@ -38,10 +38,10 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                            <modal-add-sketch></modal-add-sketch>
-
+                            
                             <button class="btn btn-outline-dark mr-auto" style="height: 40px;">+ Add Deviations</button>
                         </form>
+                        <modal-add-sketch></modal-add-sketch>
                     </nav>
                     <p>Add new deviations and drag to reorder them. You can also edit your Collection info.</p>
 
