@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a href="" @click.prevent="show(); getSketches();">Show ME</a>
+    <a href="" @click.prevent="show(); getSketches();" class="btn btn-outline-dark mr-auto" style="height: 40px;">Add Deviation</a>
     <modal name="modal-login" :height="850" :width="1120">
         <header class="modal-header d-flex">
             <h1 class="mr-auto">Add Deviation</h1>
@@ -116,6 +116,17 @@ export default {
                 console.log(response.status);
                 this.sketches = response.data;
             });
+
+            // axios.get('/sketches_json/', {
+            //     params: {
+            //         collection_id: 2
+            //     }
+            // })
+            // .then((response) => {
+            //     console.log(response.data);
+            //     console.log(response.status);
+            //     this.sketches = response.data;
+            // });
 
             
 

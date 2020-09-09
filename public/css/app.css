@@ -11105,9 +11105,10 @@ a.text-dark:focus {
   background-color: white;
 }
 
+.collection-sketches .sketch-item,
 .update-collection .sketch-item {
   position: relative;
-  background-color: red;
+  background-color: white;
 }
 
 .corner-dropdown {
@@ -11122,7 +11123,7 @@ a.text-dark:focus {
   opacity: 1;
 }
 
-.update-collection .sketch-item .fade-block {
+.sketch-item .fade-block {
   position: absolute;
   top: 0;
   left: 0;
@@ -11133,7 +11134,7 @@ a.text-dark:focus {
   opacity: 0;
 }
 
-.update-collection .sketch-item:hover .fade-block {
+.sketch-item:hover .fade-block {
   opacity: 1;
 }
 

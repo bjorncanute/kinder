@@ -29,8 +29,11 @@ Vue.component('watch-button', require('./components/WatchButton.vue').default);
 
 Vue.component('table-draggable', require('./components/TableDraggable.vue').default);
 
-
 Vue.component('modal-add-sketch', require('./components/ModalAddSketch.vue').default);
+
+Vue.component('modal-edit-collection', require('./components/ModalEditCollection').default);
+
+Vue.component('modal-select-collection', require('./components/ModalSelectCollection').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

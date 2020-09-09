@@ -33,8 +33,10 @@ window.onload = function() {
             moveRow();
         }
     }
+    moveRow();
     // document.getElementById('move_row_btn').onclick = function () {
     //     moveRow();
     // }
+    // window.onresize(moveRow());
 }
 

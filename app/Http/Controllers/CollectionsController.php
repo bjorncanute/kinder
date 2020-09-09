@@ -78,8 +78,46 @@ class CollectionsController extends Controller
         return response('Remove Success', 200);
     }
 
+    public function removeSketchFromCollection()
+    {
+        $collection = Collection::findOrFail(request()->collection_id);
+        $sketch_id = request()->sketch_id;
+        $collection->sketches()->detach($sketch_id);
+        return response('Remove Success', 200);
+    }
 
 
+    public function getCollectionsJSON()
+    {
+        return response()->json(auth()->user()->collections);
+    }
+
+    public function getSketchesJSON()
+    {
+        if(request()->collection_id == 0) {
+            $collection = auth()->user(); // hacky as shit
+        } else {
+            $collection = Collection::findOrFail(request()->collection_id);
+        }
+        return response()->json($collection->sketches);
+    }
+    
+    public function setCoverImage()
+    {
+        $collection = Collection::findOrFail(request()->collection);
+        $coverImage = request()->coverImage;
+
+        
+        return response('Added Cover Image', 200);
+    }
+
+    public function updateCoverImage(Collection $collection, $coverImage)
+    {
+        if (!$collection->isCoverSet) {
+            $collection->coverImage = $coverImage;
+            $collection->save();
+        }
+    }
 
 
 
@@ -87,10 +125,24 @@ class CollectionsController extends Controller
     public function copySketch(Collection $collection, $sketch)
     {
         $order = $collection->sketches->count();
+        $order++;
         $collection->sketches()->attach($sketch, [
-            'order' => $order + 1
+            'order' => $order
         ]);
         return response('Update Success', 200);
+    }
+
+    public function copySketchToCollection()
+    {
+        $collection = Collection::findOrFail(request()->collection);
+        $sketch = request()->sketch;
+        $order = $collection->sketches()->count();
+        $order++;
+
+        $collection->sketches()->attach($sketch, [
+            'order' => $order
+        ]);
+        return response('copied over', 200);
     }
 
 
@@ -126,9 +178,14 @@ class CollectionsController extends Controller
 
     public function getSketches()
     {
+        
         $collection = Collection::findOrFail(request()->collection_id);
-        $sketches = $collection->sketches;
-        return response()->json($collection->sketches);
+        // $sketches = $collection->sketches; //NOT NEEDED
+
+
+        // return response()->json($collection->sketches);
+        return response()->json(auth()->user()->sketches);
+
     }
 
     public function addToCollection()

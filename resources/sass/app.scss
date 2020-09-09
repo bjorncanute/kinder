@@ -148,9 +148,10 @@
     // display: flexbox;
 }
 
+.collection-sketches .sketch-item,
 .update-collection .sketch-item {
     position: relative;
-    background-color: red;
+    background-color: white;
 }
 .corner-dropdown {
     position: absolute;
@@ -164,7 +165,7 @@
     opacity: 1;
 }
 
-.update-collection .sketch-item .fade-block {
+.sketch-item .fade-block {
     position: absolute;
     top: 0;
     left: 0;
@@ -175,8 +176,7 @@
     opacity: 0;
 }
 
-
-.update-collection .sketch-item:hover .fade-block {
+.sketch-item:hover .fade-block {
     opacity: 1;
 }
 

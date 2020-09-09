@@ -9,20 +9,22 @@ use App\Collection;
 class GalleryController extends Controller
 {
     //
-    public function show($username, $collection = null)
+    public function show($username, $collection_id = null)
     {
         $user = User::where('username', $username)->first();
         $watching = (auth()->user()) ? auth()->user()->watching->contains($user->id) : false;
 
 
-        if (!$collection) {
+        if (!$collection_id) {
             // super hacky way to trick blade into grabbing all the sketches
             $selectedCollection = $user; 
         } else {
-            $selectedCollection = Collection::find($collection);
+            $selectedCollection = Collection::find($collection_id);
         }
+
+        $collection_list = $user->collections;
         
-        return view('gallery.show', compact('user', 'watching', 'selectedCollection'));
+        return view('gallery.show', compact('user', 'watching', 'selectedCollection', 'collection_list'));
     }
 
 

@@ -50,7 +50,7 @@ Route::post('/collections/{src}/{dst}/moveSketch',               'CollectionsCon
 Route::patch('/collections/updateAll',    'CollectionsController@updateAll');
 
 
-Route::get('/{username}/gallery/{collection?}',        'GalleryController@show')->name('gallery.show');
+Route::get('/{username}/gallery/{collection_id?}',        'GalleryController@show')->name('gallery.show');
 Route::get('/{username}/gallery/{collection}/edit',    'GalleryController@edit')->name('gallery.edit');
 
 
@@ -61,5 +61,12 @@ Route::get('sketches_json', 'CollectionsController@getSketches');
 Route::get('/collections/addToCollection', 'CollectionsController@addToCollection');
 
 
-Route::get('/bob', 'CollectionsController@addToCollection');
+// Route::get('/bob', 'CollectionsController@addToCollection');
 Route::post('/addToCollection', 'CollectionsController@addToCollection');
+
+Route::post('copySketchToCollection', 'CollectionsController@copySketchToCollection');
+Route::post('moveSketchToCollection', 'CollectionsController@copySketchToCollection');
+Route::post('/removeSketchFromCollection/',   'CollectionsController@removeSketchFromCollection');
+
+Route::get('/get_collections_json',   'CollectionsController@getCollectionsJSON');
+Route::get('/get_sketches_json',          'CollectionsController@getSketchesJSON');

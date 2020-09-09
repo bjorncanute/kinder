@@ -21,7 +21,7 @@
                             <li class="breadcrumb-item active">{{ $selectedCollection->name }}</li>
                         </ol>
 
-                        <form action="/collections/{{ $selectedCollection->id }}/add/" method="post">
+                        <!-- <form action="/collections/{{ $selectedCollection->id }}/add/" method="post">
                             @csrf
                             <label for="sketch_id">Collection Title</label>
                             <input  id="sketch_id" 
@@ -40,7 +40,7 @@
                             @enderror
                             
                             <button class="btn btn-outline-dark mr-auto" style="height: 40px;">+ Add Deviations</button>
-                        </form>
+                        </form> -->
                         <modal-add-sketch></modal-add-sketch>
                     </nav>
                     <p>Add new deviations and drag to reorder them. You can also edit your Collection info.</p>
@@ -48,6 +48,8 @@
                     <table-draggable :collection="{{$selectedCollection}}"
                              :sketches="{{$selectedCollection->sketches}}"
                              :collections_list="{{$user->collections}}"></table-draggable>
+
+                    
                     
                 </div>
 
