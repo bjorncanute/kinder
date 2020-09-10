@@ -37,19 +37,17 @@ class GalleryController extends Controller
         return view('gallery.edit_collection', compact('user', 'selectedCollection'));
     }
 
-    public function returnCoverImage(User $user, $collection_id) 
+    public function returnCoverImage(User $user, Collection $collection) 
     {
         
-
-        if ($collection_id == 0) {
+        // if collection id is zero then its for gallery
+        if ($collection == null) {
             $filePath = $user->sketches->first()->thumbnail;
         } else {
-            $collection = Collection::find($collection_id);
             $filePath = $collection->sketches->first()->thumbnail;
         }
 
         $filePath = 'storage/' . $filePath;
-        // $filePath = "storage/" . $user->sketches->first()->thumbnail;
         return response()->file($filePath);
     }
 }
