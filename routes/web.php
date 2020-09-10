@@ -57,4 +57,5 @@ Route::patch('/updateAllSketches',                     'CollectionsController@up
 // Route::post('/collections/{src}/{dst}/moveSketch',               'CollectionsController@moveSketch');
 // Route::post('/collections/removeSketch',   'CollectionsController@removeSketch');
 
-Route::get('/cover_image/{user}', 'GalleryController@returnCoverImage');
+// Route::get('/cover_image/{user}', 'GalleryController@returnCoverImage');
+Route::get('/cover_image/{user}/{collection}', 'GalleryController@returnCoverImage');

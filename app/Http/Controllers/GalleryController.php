@@ -37,7 +37,7 @@ class GalleryController extends Controller
         return view('gallery.edit_collection', compact('user', 'selectedCollection'));
     }
 
-    public function returnCoverImage(User $user) 
+    public function returnCoverImage(User $user, $collection_id) 
     {
         
 
