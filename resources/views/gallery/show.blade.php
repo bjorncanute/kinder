@@ -90,7 +90,8 @@
                 <a href="/{{ $user->username }}/gallery/" class="collection-item {{ (request()->segment(3) == null) ? 'selected' : '' }}">
                     
                     <div class="thumbnail-image">
-                        <img src="/storage/{{ $user->sketches->first()->thumbnail }}" alt="">
+                        <!-- <img src="/storage/{{ $user->sketches->first()->thumbnail }}" alt=""> -->
+                        <img src="/cover_image/{{$user->id}}" alt="">
                     </div>
                     <div class="collection-name">All</div>
                     <div class="number-of-sketches">2846 deviations</div>
@@ -101,7 +102,7 @@
                     <a href="/{{ $user->username }}/gallery/{{$collection->id}}" class="collection-item {{ (request()->segment(3) == $collection->id) ? 'selected' : ''}}">
                         
                         <div class="thumbnail-image">
-                            <img src="/storage/{{ $collection->sketches->first()->thumbnail ?? '' }}" alt="">
+                            <img src="/storage/{{ $collection->coverImage ?? '' }}" alt="">
                         </div>
                         <div class="collection-name">{{ $collection->name }}</div>
                         <div class="number-of-sketches">2846 deviations</div>

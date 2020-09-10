@@ -17,46 +17,33 @@ class CollectionsController extends Controller
 
     public function create()
     {
-        // $user = auth()->user();
-        
-        // return view('collections.create', compact('user'));
         return view('collections.create');
     }
 
     public function store()
     {
         $data = request()->validate([
-            'name' => 'required'     
+            'name' => 'required' 
         ]);
 
-        auth()->user()->collections()->create($data);
+        auth()->user()->collections()->create(array_merge(
+            $data,
+            ['isCoverSet' => false]
+        ));
+
+        auth()->user()->profile->update(array_merge(
+            $data,
+            $imageArray ?? []
+        ));
 
         return redirect('/profile/' . auth()->user()->id);
 
     }
 
-    public function add_sketch(Collection $collection)
-    {
-        // dd(request()->all());
-        $data = request()->validate([
-            'sketch_id' => 'required'
-        ]);
-        $count = $collection->sketches()->count();
-        $sketch_id = $data['sketch_id'];
-
-        $collection->sketches()->attach($sketch_id, [
-            'order' => $count + 1
-        ]);
-
-        return Redirect::back();
-
-    }
-
+    
     public function updateAll()
     {
-        // $collection = Collection::find(1);// hard coded fix later
         $collection = Collection::find(request()->collection_id);
-
         $collection->sketches()->detach();
 
         foreach (request()->sketches as $sketch) {
@@ -64,18 +51,9 @@ class CollectionsController extends Controller
                 'order' => $sketch['pivot']['order']
             ]);
         }
-
         
         return response('Update Success', 200);
 
-    }
-
-    public function removeSketch()
-    {
-        $collection = Collection::findOrFail(request()->collection_id);
-        $sketch_id = request()->sketch_id;
-        $collection->sketches()->detach($sketch_id);
-        return response('Remove Success', 200);
     }
 
     public function removeSketchFromCollection()
@@ -85,7 +63,6 @@ class CollectionsController extends Controller
         $collection->sketches()->detach($sketch_id);
         return response('Remove Success', 200);
     }
-
 
     public function getCollectionsJSON()
     {
@@ -102,90 +79,64 @@ class CollectionsController extends Controller
         return response()->json($collection->sketches);
     }
     
-    public function setCoverImage()
-    {
-        $collection = Collection::findOrFail(request()->collection);
-        $coverImage = request()->coverImage;
+    // public function setCoverImage()
+    // {
+    //     $collection = Collection::findOrFail(request()->collection);
+    //     $coverImage = request()->coverImage;
 
-        
-        return response('Added Cover Image', 200);
-    }
+    //     return response('Added Cover Image', 200);
+    // }
 
-    public function updateCoverImage(Collection $collection, $coverImage)
-    {
-        if (!$collection->isCoverSet) {
-            $collection->coverImage = $coverImage;
-            $collection->save();
-        }
-    }
-
-
-
-
-    public function copySketch(Collection $collection, $sketch)
-    {
-        $order = $collection->sketches->count();
-        $order++;
-        $collection->sketches()->attach($sketch, [
-            'order' => $order
-        ]);
-        return response('Update Success', 200);
-    }
+    // public function updateCoverImage(Collection $collection, $coverImage)
+    // {
+    //     if (!$collection->isCoverSet) {
+    //         $collection->coverImage = $coverImage;
+    //         $collection->save();
+    //     }
+    // }
 
     public function copySketchToCollection()
     {
-        $collection = Collection::findOrFail(request()->collection);
-        $sketch = request()->sketch;
+        $collection = Collection::findOrFail(request()->collection_id);
+        $sketch = request()->sketch_id;
         $order = $collection->sketches()->count();
         $order++;
 
         $collection->sketches()->attach($sketch, [
             'order' => $order
         ]);
-        return response('copied over', 200);
+
+        return response($sketch, 200);
     }
 
-
-
-    public function moveSketch(Collection $src, Collection $dst)
+    public function moveSketchToCollection()
     {
-        $sketch = request()->sketch;
+        $src = Collection::findOrFail(request()->src_id);
+        $dst = Collection::findOrFail(request()->dst_id);
+        $sketch = request()->sketch_id;
         $order = $dst->sketches()->count();
+        $order++;
 
         $src->sketches()->detach($sketch);
         $dst->sketches()->attach($sketch, [
-            'order' => $order + 1
+            'order' => $order
         ]);
+        
+        $this->updateCoverImage($dst.id, $sketch);
+        // $sketch_new = Sketch::findOrFail($sketch);
+        // if (!$dst->isCoverSet) {
+        //     $dst->coverImage = $sketch_new->thumbnail;
+        //     $dst->save();
+        // }
 
-        return Redirect::back();
+        return response('copied over', 200);
     }
 
-    public function show(\App\Collection $collection)
+    public function show(Collection $collection)
     {
         return view('collections/show', [
             'collection' => $collection
         ]);
-    }
-
-
-    public function get()
-    {
-        $user_id = auth()->user()->id;
-        $collections = Collection::where('user_id', $user_id)->get();
-        return response()->json($collections);
-
-    }
-
-    public function getSketches()
-    {
-        
-        $collection = Collection::findOrFail(request()->collection_id);
-        // $sketches = $collection->sketches; //NOT NEEDED
-
-
-        // return response()->json($collection->sketches);
-        return response()->json(auth()->user()->sketches);
-
     }
 
     public function addToCollection()
@@ -203,9 +154,31 @@ class CollectionsController extends Controller
             $order++;
         }
 
-      return response($sketches, 200);
-        
+        if (!$collection->isCoverSet) {
+            $firstSketch = Sketch::find($sketches[0]);
+            $collection->coverImage = $firstSketch->thumbnail;
+            $collection->save();
+        }
 
+        return response($sketches, 200);
+    }
 
+    public function setCoverImage()
+    {
+        $sketch     = Sketch::findOrFail(request()->sketch_id);
+        $collection = Collection::findOrFail(request()->collection_id);
+
+        $collection->coverImage = $sketch->thumbnail;
+        $collection->isCoverSet = true;
+        $collection->save();    
+        return response("cover image is set", 200);    
+    }
+
+    public function updateCoverImage(Collection $collection, Sketch $sketch)
+    {
+        if (!$collection->isCoverSet) {
+            $collection->coverImage = $sketch->thumbnail;
+            $collection->save();
+        }
     }
 }

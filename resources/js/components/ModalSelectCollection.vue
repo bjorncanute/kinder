@@ -20,7 +20,7 @@
                 <!-- ALL COLLECTION -->
                 <a @click="selectAll()" class="collection-item">
                     <div class="thumbnail-image">
-                        <img src="/storage/ALLIMAGE.jpg" alt="">
+                        <img src="/first_image" alt="">
                     </div>
                     <div class="collection-name">All</div>
                 </a>
@@ -33,7 +33,7 @@
                     
 
                     <div class="thumbnail-image">
-                        <img src="/storage/UPDATELATER.jpg" alt="">
+                        <img :src="'/storage/' + collection.coverImage" alt="">
                     </div>
                     <div class="collection-name">{{collection.name}}</div>
                 </a>
@@ -105,7 +105,6 @@ export default {
         selectAll() {
             this.$modal.show('modal-select-sketches');
             this.getSketchesJSON(0);
-
         },
         
         getCollectionsJSON() {

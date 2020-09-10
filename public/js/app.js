@@ -2155,7 +2155,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2165,9 +2164,6 @@ __webpack_require__.r(__webpack_exports__);
   props: ['collection', 'sketches', 'collections_list'],
   data: function data() {
     return {
-      // sketches: [],
-      // selected: [],
-      // clicked: false
       collection: this.collection,
       sketches: this.sketches,
       collections_list: this.collections_list
@@ -2177,9 +2173,8 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       this.sketches.map(function (sketch, index) {
         sketch.pivot.order = index + 1;
-      }); // console.log(this.collection.id);
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch('/collections/updateAll', {
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch('/updateAllSketches', {
         sketches: this.sketches,
         collection_id: this.collection.id
       });
@@ -2190,19 +2185,17 @@ __webpack_require__.r(__webpack_exports__);
         collection_id: this.collection.id
       });
     },
-    move: function move(src, dst, sketch) {
-      // console.log("{src}");
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/collections/' + src + '/' + dst + '/moveSketch', {
-        sketch: sketch
+    moveSketchToCollection: function moveSketchToCollection(sketch_id, dst_id) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/moveSketchToCollection', {
+        sketch_id: sketch_id,
+        src_id: this.collection.id,
+        dst_id: dst_id
       });
     },
-    copy: function copy(collection, sketch) {
-      // console.log(sketch);
-      // axios.patch('/collections/copySketch/' + collection + '/' + sketch, {
-      // })
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch('/copySketchToCollection/', {
-        sketch: sketch,
-        collection: collection
+    copySketchToCollection: function copySketchToCollection(sketch_id, collection_id) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/copySketchToCollection/', {
+        sketch_id: sketch_id,
+        collection_id: collection_id
       });
     },
     show: function show() {
@@ -2210,41 +2203,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     hide: function hide() {
       this.$modal.hide('modal-edit-collection');
-    } // addOrRemove(id) {
-    //     var index = this.selected.indexOf(id);
-    //     if (index === -1) {
-    //         this.selected.push(id);
-    //     } else {
-    //         this.selected.splice(index, 1);
-    //     }
-    //     console.log(this.selected);
-    // },
-    // isSelected(id) {
-    //     if (this.selected.includes(id)) {
-    //         return 'selected';
-    //     } else {
-    //         return '';
-    //     }
-    // },
-    // addToCollection() {
-    //     axios.post('/addToCollection', {
-    //         collection: 1,
-    //         sketches: this.selected
-    //     })
-    // },
-    // getSketches () {
-    //     axios.get('/sketches_json/', {
-    //         params: {
-    //             collection_id: 2
-    //         }
-    //     })
-    //     .then((response) => {
-    //         console.log(response.data);
-    //         console.log(response.status);
-    //         this.sketches = response.data;
-    //     });            
-    // }
-
+    }
   },
   mount: function mount() {
     this.show();
@@ -42290,10 +42249,9 @@ var render = function() {
                                             },
                                             on: {
                                               click: function($event) {
-                                                return _vm.move(
-                                                  _vm.collection.id,
-                                                  collection_item.id,
-                                                  sketch.id
+                                                return _vm.moveSketchToCollection(
+                                                  sketch.id,
+                                                  collection_item.id
                                                 )
                                               }
                                             }
@@ -42337,10 +42295,9 @@ var render = function() {
                                             },
                                             on: {
                                               click: function($event) {
-                                                return _vm.move(
-                                                  _vm.collection.id,
-                                                  collection_item.id,
-                                                  sketch.id
+                                                return _vm.copySketchToCollection(
+                                                  sketch.id,
+                                                  collection_item.id
                                                 )
                                               }
                                             }
@@ -42470,9 +42427,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "thumbnail-image" }, [
-                      _c("img", {
-                        attrs: { src: "/storage/ALLIMAGE.jpg", alt: "" }
-                      })
+                      _c("img", { attrs: { src: "/first_image", alt: "" } })
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "collection-name" }, [
@@ -42500,7 +42455,10 @@ var render = function() {
                     [
                       _c("div", { staticClass: "thumbnail-image" }, [
                         _c("img", {
-                          attrs: { src: "/storage/UPDATELATER.jpg", alt: "" }
+                          attrs: {
+                            src: "/storage/" + collection.coverImage,
+                            alt: ""
+                          }
                         })
                       ]),
                       _vm._v(" "),

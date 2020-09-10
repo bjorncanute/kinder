@@ -37,7 +37,6 @@
                             
                             <div class="corner-order-number" style="position: absolute;top:0;left:0;width:40px;height:40px;background:white;text-align:center;line-height:40px;"> {{sketch.pivot.order}} </div>
                         </div>
-                        <!-- <div v-for="col in sketches" v-bind="col.id">Hello World</div> -->
                         
                         <!-- fade block -->
                         <div class="fade-block"></div>
@@ -56,7 +55,7 @@
                                     <ul class="dropdown-menu">
                                         <li  v-for="(collection_item, index) in collections_list" v-bind="index">
 
-                                            <a @click="move(collection.id, collection_item.id, sketch.id)"
+                                            <a @click="moveSketchToCollection(sketch.id, collection_item.id)"
                                                 class="dropdown-item" 
                                                 tabindex="-1" 
                                                 href="#">{{collection_item.name}}</a></li>
@@ -69,7 +68,7 @@
                                     <ul class="dropdown-menu">
                                         <li  v-for="collection_item in collections_list" v-bind="collection">
 
-                                            <a @click="move(collection.id, collection_item.id, sketch.id)"
+                                            <a @click="copySketchToCollection(sketch.id, collection_item.id,)"
                                                 class="dropdown-item" 
                                                 tabindex="-1" 
                                                 href="#">{{collection_item.name}}</a></li>
@@ -108,10 +107,6 @@ export default {
 
     data() {
         return {
-            // sketches: [],
-            // selected: [],
-            // clicked: false
-            
             collection: this.collection,
             sketches: this.sketches,
             collections_list: this.collections_list,
@@ -124,9 +119,7 @@ export default {
                 sketch.pivot.order = index + 1;
             });
 
-            // console.log(this.collection.id);
-
-            axios.patch('/collections/updateAll', {
+            axios.patch('/updateAllSketches', {
                 sketches: this.sketches,
                 collection_id: this.collection.id
             });
@@ -139,27 +132,21 @@ export default {
             })
         },
 
-        move(src, dst, sketch) {
-            // console.log("{src}");
-            axios.post('/collections/' + src + '/' + dst + '/moveSketch', {
-                sketch: sketch
+        moveSketchToCollection(sketch_id, dst_id) {
+            axios.post('/moveSketchToCollection', {
+                sketch_id: sketch_id,
+                src_id: this.collection.id,
+                dst_id: dst_id
 
             })
         },
 
-        copy(collection, sketch) {
-            // console.log(sketch);
-            // axios.patch('/collections/copySketch/' + collection + '/' + sketch, {
-
-            // })
-            axios.patch('/copySketchToCollection/', {
-                sketch: sketch,
-                collection: collection
+        copySketchToCollection(sketch_id, collection_id) {
+            axios.post('/copySketchToCollection/', {
+                sketch_id: sketch_id,
+                collection_id: collection_id
             })
         },
-
-
-        
 
         show () {
             this.$modal.show('modal-edit-collection');
@@ -167,44 +154,6 @@ export default {
         hide () {
             this.$modal.hide('modal-edit-collection');
         },
-        // addOrRemove(id) {
-        //     var index = this.selected.indexOf(id);
-        //     if (index === -1) {
-        //         this.selected.push(id);
-        //     } else {
-        //         this.selected.splice(index, 1);
-        //     }
-
-        //     console.log(this.selected);
-        // },
-        // isSelected(id) {
-        //     if (this.selected.includes(id)) {
-        //         return 'selected';
-        //     } else {
-        //         return '';
-        //     }
-        // },
-        // addToCollection() {
-        //     axios.post('/addToCollection', {
-        //         collection: 1,
-        //         sketches: this.selected
-        //     })
-        // },
-
-        // getSketches () {
-        //     axios.get('/sketches_json/', {
-        //         params: {
-        //             collection_id: 2
-        //         }
-        //     })
-        //     .then((response) => {
-        //         console.log(response.data);
-        //         console.log(response.status);
-        //         this.sketches = response.data;
-        //     });            
-        // }
-
-
 
     },
     mount () {
