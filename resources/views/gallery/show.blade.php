@@ -91,7 +91,7 @@
                     
                     <div class="thumbnail-image">
                         <!-- <img src="/storage/{{ $user->sketches->first()->thumbnail }}" alt=""> -->
-                        <img src="/cover_image/{{$user->id}}" alt="">
+                        <img src="/cover_image/{{$user->id}}/0" alt="">
                     </div>
                     <div class="collection-name">All</div>
                     <div class="number-of-sketches">2846 deviations</div>
@@ -102,7 +102,8 @@
                     <a href="/{{ $user->username }}/gallery/{{$collection->id}}" class="collection-item {{ (request()->segment(3) == $collection->id) ? 'selected' : ''}}">
                         
                         <div class="thumbnail-image">
-                            <img src="/storage/{{ $collection->coverImage ?? '' }}" alt="">
+                            <!-- <img src="/storage/{{ $collection->coverImage ?? '' }}" alt=""> -->
+                            <img src="/cover_image/{{$user->id}}/{{$collection->id}}" alt="">
                         </div>
                         <div class="collection-name">{{ $collection->name }}</div>
                         <div class="number-of-sketches">2846 deviations</div>
@@ -133,9 +134,12 @@
                     <span>Edit</span>
                 </a> -->
 
-                <modal-edit-collection  :collection="{{$selectedCollection}}"
-                                        :sketches="{{$selectedCollection->sketches}}"
-                                        :collections_list="{{$collection_list}}"></modal-edit-collection>
+                @if (Auth::check())
+                    <modal-edit-collection  :user="{{$user->id}}"
+                                            :collection="{{$selectedCollection}}"
+                                            :sketches="{{$selectedCollection->sketches}}"
+                                            :collections_list="{{$collection_list}}"></modal-edit-collection>
+                @endif
                                         
                
             </div>

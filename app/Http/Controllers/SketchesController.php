@@ -103,4 +103,20 @@ class SketchesController extends Controller
         });
         $image->save($path);
     }
+
+    
+
+    public function removeAnyCoverImage(Sketch $sketch)
+    {
+        $user = auth()->user();
+        $collections = $user->collections->where('isCoverSet', true);
+        foreach($user->collections as $collection) {
+            if($collection->coverImage == $sketch->id) {
+                // we must unset the cover image 
+                $collection->coverImage = null;
+                $collection->isCoverSet = false;
+                $collection->save();
+            }
+        }
+    }
 }

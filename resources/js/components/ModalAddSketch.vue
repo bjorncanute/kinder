@@ -1,9 +1,9 @@
 <template>
   <div>
-    <a href="" @click.prevent="show(); getSketches();" class="btn btn-outline-dark mr-auto" style="height: 40px;">Add Deviation</a>
-    <modal name="modal-login" :height="850" :width="1120">
+    <a href="" @click.prevent="show(); getCollectionsJSON();" class="btn btn-outline-dark mr-auto" style="height: 40px;">Add Deviation</a>
+    <modal name="modal-add-sketch" :height="850" :width="1120">
         <header class="modal-header d-flex">
-            <h1 class="mr-auto">Add Deviation</h1>
+            <h1 class="mr-auto">Add Deviations</h1>
             <button class="close ml-auto">✖</button>
         </header>
 
@@ -16,48 +16,57 @@
         </nav>
 
         <div class="body">
-            <div class="collections-select">
+            <div class="collections-select d-flex">
+                <!-- ALL COLLECTION -->
+                <a @click="selectAll()" class="collection-item">
+                    <div class="thumbnail-image">
+                        <img :src="'/cover_image/' + user + '/0'" alt="">                        
+                    </div>
+                    <div class="collection-name">All</div>
+                </a>
 
+                <!-- COLLECTIONS FOR EACH -->
+                <a class="collection-item" 
+                   v-for="collection in collections" 
+                   v-bind="collection.id" 
+                   @click="selectCollection(collection.id)">
+                    
 
-                <!-- <button class="btn btn-primary" @click="getSketches()" v-text="dynamic"></button> -->
-                <!-- <div class="hello-wordl" v-text="dynamic"></div> -->
-
-                <!-- <a v-for="sketch in sketches" v-bind="sketch" class="results" class="collections-select">
-                    <img src="" alt="">
-                    <div class="nav-item"></div>
-                    <div class="number-of-deviations"> deviations</div>
-                </a> -->
-
-                <!-- COLECTIONS FOR EACH -->
-                <!-- <div class="test" v-for="data in dynamic">
-                    {{data}}
-                    <div class="id">{{data.id}}</div>
-                    <div class="name">{{data.name}}</div>
-                    <div class="order">{{data.order}}</div>
-                </div> -->
-
-                <div class="sketches-select d-flex">
-                    <!-- SKETCHES FOR EACH -->
-                    <!-- <a :value="data.id" class="sketch-item" v-for="(data, index) in dynamic" @click="addToSelected(index)"> -->
-                        <!-- <div class="id">{{data.id}}</div> -->
-                    <a  :value="data.id" 
-                        :class="'sketch-item ' + isSelected(data.id)" 
-                        v-for="data in dynamic" 
-                        :key="data.id"
-                        @click="addOrRemove(data.id);">
-                        <div class="thumbnail-image" style="height: 120px; width: 187px; overflow: hidden; position: relative">
-                            <img :src="'/storage/' + data.thumbnail" alt="" width="100%" style="width: 187px; height: 120px; object-fit: cover; object-position: 50% -19.5812px;">
-                        </div>
-                    </a>
-
-                </div>
-
-                <button @click="addToCollection()" class="btn btn-primary ml-auto">Add</button>
-
+                    <div class="thumbnail-image">
+                        <!-- <img :src="'/storage/' + collection.coverImage" alt=""> -->
+                        <!-- <img :src="'/cover_image/1/' + collection.id" alt=""> -->
+                        <img :src="'/cover_image/' + user + '/' + collection.id" alt="">
+                    </div>
+                    <div class="collection-name">{{collection.name}}</div>
+                </a>
 
             </div>
         </div>
     </modal>
+
+    <modal name="modal-select-sketches" :height="850" :width="1120">
+       
+
+        <div class="sketches-select d-flex flex-wrap">
+            <!-- SKETCHES FOR EACH -->
+            <a  v-for="sketch in sketches" 
+                :value="sketch.id" 
+                :class="'sketch-item ' + isSelected(sketch.id)" 
+                :key="sketch.id"
+                @click="addOrRemove(sketch.id);">
+                <div class="thumbnail-image" style="height: 120px; width: 187px; overflow: hidden; position: relative">
+                    <img :src="'/storage/' + sketch.thumbnail" alt="" width="100%" style="width: 187px; height: 120px; object-fit: cover; object-position: 50% -19.5812px;">
+                </div>
+            </a>
+
+        </div>
+
+        <button @click="addToCollection()" class="btn btn-primary ml-auto">Add</button>
+
+        
+    </modal>
+ 
+    
 </div>
 </template>
 
@@ -66,21 +75,74 @@ import axios from 'axios';
 
 export default {
 
+    props: ['collection', 'user'],
+
+
     data() {
         return {
             sketches: [],
-            selected: []
+            selected: [],
+            collections: [],
+            collection: this.collection
             // clicked: false
+            // currentCollection: 0,
         }
     },
 
     methods: {
         show () {
-            this.$modal.show('modal-login');
+            this.$modal.show('modal-add-sketch');
         },
         hide () {
-            this.$modal.hide('modal-login');
+            this.$modal.hide('modal-add-sketch');
         },
+
+        selectCollection (collection_id) {
+            // this.$modal.hide('modal-select-collection');
+            this.$modal.show('modal-select-sketches');
+            this.getSketchesJSON(collection_id);
+            // currentCollection = collection_id;
+        },
+
+        selectAll() {
+            this.$modal.show('modal-select-sketches');
+            this.getSketchesJSON(0);
+        },
+        
+        getCollectionsJSON() {
+            axios.get('/get_collections_json/', {
+                
+            })
+            .then((response) => {
+                this.collections = response.data;
+            });  
+        },
+
+        getSketchesJSON(collection_id) {
+            axios.get('/get_sketches_json/', {
+                params: {
+                    collection_id: collection_id
+                }
+            })
+            .then((response) => {
+                this.sketches = response.data;
+            });
+        },
+
+        addToCollection() {
+            // var pageURL = window.location.href;
+            // var collection_id = pageURL.substr(pageURL.lastIndexOf('/') + 1);
+
+            axios.post('/addToCollection', {
+                collection: this.collection.id,
+                sketches: this.selected
+            })
+            
+
+
+
+        },
+
         addOrRemove(id) {
             var index = this.selected.indexOf(id);
             if (index === -1) {
@@ -91,55 +153,25 @@ export default {
 
             console.log(this.selected);
         },
+
         isSelected(id) {
             if (this.selected.includes(id)) {
                 return 'selected';
             } else {
                 return '';
             }
-        },
-        addToCollection() {
-            axios.post('/addToCollection', {
-                collection: 1,
-                sketches: this.selected
-            })
-        },
-
-        getSketches () {
-            axios.get('/sketches_json/', {
-                params: {
-                    collection_id: 2
-                }
-            })
-            .then((response) => {
-                console.log(response.data);
-                console.log(response.status);
-                this.sketches = response.data;
-            });
-
-            // axios.get('/sketches_json/', {
-            //     params: {
-            //         collection_id: 2
-            //     }
-            // })
-            // .then((response) => {
-            //     console.log(response.data);
-            //     console.log(response.status);
-            //     this.sketches = response.data;
-            // });
-
-            
-
-
-            
         }
+        
     },
     mount () {
         this.show()
     },
     
     computed: {
-        dynamic() {
+        collections() {
+            return this.collections;
+        },
+        sketches() {
             return this.sketches;
         }
     }

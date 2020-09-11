@@ -45,7 +45,16 @@ class GalleryController extends Controller
             $filePath = $user->sketches->first()->thumbnail;
         } else {
             $collection = Collection::findOrFail($collection);
-            $filePath = $collection->sketches->first()->thumbnail;
+
+            if ($collection->isCoverSet == true) {
+                // echo "hello world"; exit;
+                $sketch_id = $collection->coverImage;
+                $filePath = \App\Sketch::findOrFail($sketch_id)->thumbnail;
+                // $filePath = $sketch->thumbnail;
+                // $filePath = $sketch_id;
+            } else {
+                $filePath = $collection->sketches->first()->thumbnail;
+            }
         }
 
         $filePath = 'storage/' . $filePath;

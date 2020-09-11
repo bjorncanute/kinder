@@ -11,7 +11,8 @@
             <!-- <button class="close ml-auto">✖</button> -->
             <div class="ml-auto">
                 <!-- <modal-add-sketch></modal-add-sketch> -->
-                <modal-select-collection :collection="collection"></modal-select-collection>
+                <!-- <modal-select-collection :collection="collection" :user="this.user"></modal-select-collection> -->
+                <modal-add-sketch :collection="collection" :user="this.user"></modal-add-sketch>
             </div>
         </header>
 
@@ -48,7 +49,9 @@
                                 ... <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                                <li><a class="dropdown-item" href="#">Use as Cover Image</a></li>
+                                <li><a  @click="setCoverImage(sketch.id)"
+                                        class="dropdown-item" 
+                                        href="" >Use as Cover Image</a></li>
                                 
                                 <li class="dropdown-submenu">
                                     <a class="dropdown-item" tabindex="-1" href="#">Move Deviation to</a>
@@ -103,7 +106,7 @@ export default {
         draggable
     },
 
-    props: ['collection', 'sketches', 'collections_list'],
+    props: ['collection', 'sketches', 'collections_list', 'user'],
 
     data() {
         return {
@@ -125,11 +128,23 @@ export default {
             });
         },
 
+        setCoverImage(sketch_id) {
+            axios.post('/set_cover_image/', {
+                sketch_id: sketch_id,
+                collection_id: this.collection.id
+            })
+        },
+
         removeSketchFromCollection(sketch_id) {
             axios.post('/removeSketchFromCollection/', {
                 sketch_id: sketch_id,
                 collection_id: this.collection.id
-            })
+            });
+            this.removeIfCoverImage(sketch_id, this.collection.id);
+        },
+
+        removeIfCoverImage(sketch_id, collection_id) {
+            axios.delete('/remove_if_cover_image/' + sketch_id + '/' + collection_id);
         },
 
         moveSketchToCollection(sketch_id, dst_id) {

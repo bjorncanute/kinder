@@ -33,7 +33,7 @@ Vue.component('modal-add-sketch', require('./components/ModalAddSketch.vue').def
 
 Vue.component('modal-edit-collection', require('./components/ModalEditCollection').default);
 
-Vue.component('modal-select-collection', require('./components/ModalSelectCollection').default);
+// Vue.component('modal-select-collection', require('./components/ModalSelectCollection').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

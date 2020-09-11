@@ -154,11 +154,11 @@ class CollectionsController extends Controller
             $order++;
         }
 
-        if (!$collection->isCoverSet) {
-            $firstSketch = Sketch::find($sketches[0]);
-            $collection->coverImage = $firstSketch->thumbnail;
-            $collection->save();
-        }
+        // if (!$collection->isCoverSet) {
+        //     $firstSketch = Sketch::find($sketches[0]);
+        //     $collection->coverImage = $firstSketch->thumbnail;
+        //     $collection->save();
+        // }
 
         return response($sketches, 200);
     }
@@ -168,17 +168,28 @@ class CollectionsController extends Controller
         $sketch     = Sketch::findOrFail(request()->sketch_id);
         $collection = Collection::findOrFail(request()->collection_id);
 
-        $collection->coverImage = $sketch->thumbnail;
+        $collection->coverImage = $sketch->id;
         $collection->isCoverSet = true;
         $collection->save();    
         return response("cover image is set", 200);    
     }
 
-    public function updateCoverImage(Collection $collection, Sketch $sketch)
+    public function removeIfCoverImage(Sketch $sketch, Collection $collection)
     {
-        if (!$collection->isCoverSet) {
-            $collection->coverImage = $sketch->thumbnail;
-            $collection->save();
+        if($collection->isCoverSet == true) {
+            if($collection->coverImage == $sketch->id) {
+                $collection->coverImage = null;
+                $collection->isCoverSet = false;
+                $collection->save();
+            }
         }
     }
+
+    // public function updateCoverImage(Collection $collection, Sketch $sketch)
+    // {
+    //     if (!$collection->isCoverSet) {
+    //         $collection->coverImage = $sketch->thumbnail;
+    //         $collection->save();
+    //     }
+    // }
 }

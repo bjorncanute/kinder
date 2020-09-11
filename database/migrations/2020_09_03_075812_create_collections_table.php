@@ -19,7 +19,7 @@ class CreateCollectionsTable extends Migration
             $table->string('name');
             $table->boolean('public')->nullable();
             $table->boolean('isCoverSet')->nullable();
-            $table->string('coverImage')->nullable();
+            $table->unsignedBigInteger('coverImage')->nullable();
             $table->integer('order')->nullable();
             $table->timestamps();
 

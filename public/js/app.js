@@ -1973,21 +1973,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['collection', 'user'],
   data: function data() {
     return {
       sketches: [],
-      selected: [] // clicked: false
+      selected: [],
+      collections: [],
+      collection: this.collection // clicked: false
+      // currentCollection: 0,
 
     };
   },
   methods: {
     show: function show() {
-      this.$modal.show('modal-login');
+      this.$modal.show('modal-add-sketch');
     },
     hide: function hide() {
-      this.$modal.hide('modal-login');
+      this.$modal.hide('modal-add-sketch');
+    },
+    selectCollection: function selectCollection(collection_id) {
+      // this.$modal.hide('modal-select-collection');
+      this.$modal.show('modal-select-sketches');
+      this.getSketchesJSON(collection_id); // currentCollection = collection_id;
+    },
+    selectAll: function selectAll() {
+      this.$modal.show('modal-select-sketches');
+      this.getSketchesJSON(0);
+    },
+    getCollectionsJSON: function getCollectionsJSON() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/get_collections_json/', {}).then(function (response) {
+        _this.collections = response.data;
+      });
+    },
+    getSketchesJSON: function getSketchesJSON(collection_id) {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/get_sketches_json/', {
+        params: {
+          collection_id: collection_id
+        }
+      }).then(function (response) {
+        _this2.sketches = response.data;
+      });
+    },
+    addToCollection: function addToCollection() {
+      // var pageURL = window.location.href;
+      // var collection_id = pageURL.substr(pageURL.lastIndexOf('/') + 1);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/addToCollection', {
+        collection: this.collection.id,
+        sketches: this.selected
+      });
     },
     addOrRemove: function addOrRemove(id) {
       var index = this.selected.indexOf(id);
@@ -2006,41 +2054,16 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return '';
       }
-    },
-    addToCollection: function addToCollection() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/addToCollection', {
-        collection: 1,
-        sketches: this.selected
-      });
-    },
-    getSketches: function getSketches() {
-      var _this = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/sketches_json/', {
-        params: {
-          collection_id: 2
-        }
-      }).then(function (response) {
-        console.log(response.data);
-        console.log(response.status);
-        _this.sketches = response.data;
-      }); // axios.get('/sketches_json/', {
-      //     params: {
-      //         collection_id: 2
-      //     }
-      // })
-      // .then((response) => {
-      //     console.log(response.data);
-      //     console.log(response.status);
-      //     this.sketches = response.data;
-      // });
     }
   },
   mount: function mount() {
     this.show();
   },
   computed: {
-    dynamic: function dynamic() {
+    collections: function collections() {
+      return this.collections;
+    },
+    sketches: function sketches() {
       return this.sketches;
     }
   }
@@ -2155,13 +2178,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a
   },
-  props: ['collection', 'sketches', 'collections_list'],
+  props: ['collection', 'sketches', 'collections_list', 'user'],
   data: function data() {
     return {
       collection: this.collection,
@@ -2179,11 +2205,21 @@ __webpack_require__.r(__webpack_exports__);
         collection_id: this.collection.id
       });
     },
+    setCoverImage: function setCoverImage(sketch_id) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/set_cover_image/', {
+        sketch_id: sketch_id,
+        collection_id: this.collection.id
+      });
+    },
     removeSketchFromCollection: function removeSketchFromCollection(sketch_id) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/removeSketchFromCollection/', {
         sketch_id: sketch_id,
         collection_id: this.collection.id
       });
+      this.removeIfCoverImage(sketch_id, this.collection.id);
+    },
+    removeIfCoverImage: function removeIfCoverImage(sketch_id, collection_id) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/remove_if_cover_image/' + sketch_id + '/' + collection_id);
     },
     moveSketchToCollection: function moveSketchToCollection(sketch_id, dst_id) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/moveSketchToCollection', {
@@ -2210,176 +2246,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     dynamic: function dynamic() {
-      return this.sketches;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModalSelectCollection.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ModalSelectCollection.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['collection'],
-  data: function data() {
-    return {
-      sketches: [],
-      selected: [],
-      collections: [],
-      collection: this.collection // clicked: false
-      // currentCollection: 0,
-
-    };
-  },
-  methods: {
-    show: function show() {
-      this.$modal.show('modal-select-collection');
-    },
-    hide: function hide() {
-      this.$modal.hide('modal-select-collection');
-    },
-    selectCollection: function selectCollection(collection_id) {
-      // this.$modal.hide('modal-select-collection');
-      this.$modal.show('modal-select-sketches');
-      this.getSketchesJSON(collection_id); // currentCollection = collection_id;
-    },
-    selectAll: function selectAll() {
-      this.$modal.show('modal-select-sketches');
-      this.getSketchesJSON(0);
-    },
-    getCollectionsJSON: function getCollectionsJSON() {
-      var _this = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/get_collections_json/', {}).then(function (response) {
-        _this.collections = response.data;
-      });
-    },
-    getSketchesJSON: function getSketchesJSON(collection_id) {
-      var _this2 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/get_sketches_json/', {
-        params: {
-          collection_id: collection_id
-        }
-      }).then(function (response) {
-        _this2.sketches = response.data;
-      });
-    },
-    addToCollection: function addToCollection() {
-      // var pageURL = window.location.href;
-      // var collection_id = pageURL.substr(pageURL.lastIndexOf('/') + 1);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/addToCollection', {
-        collection: this.collection.id,
-        sketches: this.selected
-      });
-    },
-    addOrRemove: function addOrRemove(id) {
-      var index = this.selected.indexOf(id);
-
-      if (index === -1) {
-        this.selected.push(id);
-      } else {
-        this.selected.splice(index, 1);
-      }
-
-      console.log(this.selected);
-    },
-    isSelected: function isSelected(id) {
-      if (this.selected.includes(id)) {
-        return 'selected';
-      } else {
-        return '';
-      }
-    }
-  },
-  mount: function mount() {
-    this.show();
-  },
-  computed: {
-    collections: function collections() {
-      return this.collections;
-    },
-    sketches: function sketches() {
       return this.sketches;
     }
   }
@@ -41893,7 +41759,7 @@ var render = function() {
             click: function($event) {
               $event.preventDefault()
               _vm.show()
-              _vm.getSketches()
+              _vm.getCollectionsJSON()
             }
           }
         },
@@ -41902,10 +41768,10 @@ var render = function() {
       _vm._v(" "),
       _c(
         "modal",
-        { attrs: { name: "modal-login", height: 850, width: 1120 } },
+        { attrs: { name: "modal-add-sketch", height: 850, width: 1120 } },
         [
           _c("header", { staticClass: "modal-header d-flex" }, [
-            _c("h1", { staticClass: "mr-auto" }, [_vm._v("Add Deviation")]),
+            _c("h1", { staticClass: "mr-auto" }, [_vm._v("Add Deviations")]),
             _vm._v(" "),
             _c("button", { staticClass: "close ml-auto" }, [_vm._v("✖")])
           ]),
@@ -41919,71 +41785,142 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "body" }, [
-            _c("div", { staticClass: "collections-select" }, [
-              _c(
-                "div",
-                { staticClass: "sketches-select d-flex" },
-                _vm._l(_vm.dynamic, function(data) {
+            _c(
+              "div",
+              { staticClass: "collections-select d-flex" },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "collection-item",
+                    on: {
+                      click: function($event) {
+                        return _vm.selectAll()
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "thumbnail-image" }, [
+                      _c("img", {
+                        attrs: {
+                          src: "/cover_image/" + _vm.user + "/0",
+                          alt: ""
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "collection-name" }, [
+                      _vm._v("All")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.collections, function(collection) {
                   return _c(
                     "a",
-                    {
-                      key: data.id,
-                      class: "sketch-item " + _vm.isSelected(data.id),
-                      attrs: { value: data.id },
-                      on: {
-                        click: function($event) {
-                          return _vm.addOrRemove(data.id)
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "thumbnail-image",
-                          staticStyle: {
-                            height: "120px",
-                            width: "187px",
-                            overflow: "hidden",
-                            position: "relative"
+                    _vm._b(
+                      {
+                        staticClass: "collection-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.selectCollection(collection.id)
                           }
-                        },
-                        [
-                          _c("img", {
-                            staticStyle: {
-                              width: "187px",
-                              height: "120px",
-                              "object-fit": "cover",
-                              "object-position": "50% -19.5812px"
-                            },
-                            attrs: {
-                              src: "/storage/" + data.thumbnail,
-                              alt: "",
-                              width: "100%"
-                            }
-                          })
-                        ]
-                      )
+                        }
+                      },
+                      "a",
+                      collection.id,
+                      false
+                    ),
+                    [
+                      _c("div", { staticClass: "thumbnail-image" }, [
+                        _c("img", {
+                          attrs: {
+                            src:
+                              "/cover_image/" + _vm.user + "/" + collection.id,
+                            alt: ""
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "collection-name" }, [
+                        _vm._v(_vm._s(collection.name))
+                      ])
                     ]
                   )
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
+                })
+              ],
+              2
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "modal",
+        { attrs: { name: "modal-select-sketches", height: 850, width: 1120 } },
+        [
+          _c(
+            "div",
+            { staticClass: "sketches-select d-flex flex-wrap" },
+            _vm._l(_vm.sketches, function(sketch) {
+              return _c(
+                "a",
                 {
-                  staticClass: "btn btn-primary ml-auto",
+                  key: sketch.id,
+                  class: "sketch-item " + _vm.isSelected(sketch.id),
+                  attrs: { value: sketch.id },
                   on: {
                     click: function($event) {
-                      return _vm.addToCollection()
+                      return _vm.addOrRemove(sketch.id)
                     }
                   }
                 },
-                [_vm._v("Add")]
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "thumbnail-image",
+                      staticStyle: {
+                        height: "120px",
+                        width: "187px",
+                        overflow: "hidden",
+                        position: "relative"
+                      }
+                    },
+                    [
+                      _c("img", {
+                        staticStyle: {
+                          width: "187px",
+                          height: "120px",
+                          "object-fit": "cover",
+                          "object-position": "50% -19.5812px"
+                        },
+                        attrs: {
+                          src: "/storage/" + sketch.thumbnail,
+                          alt: "",
+                          width: "100%"
+                        }
+                      })
+                    ]
+                  )
+                ]
               )
-            ])
-          ])
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary ml-auto",
+              on: {
+                click: function($event) {
+                  return _vm.addToCollection()
+                }
+              }
+            },
+            [_vm._v("Add")]
+          )
         ]
       )
     ],
@@ -42069,8 +42006,8 @@ var render = function() {
               "div",
               { staticClass: "ml-auto" },
               [
-                _c("modal-select-collection", {
-                  attrs: { collection: _vm.collection }
+                _c("modal-add-sketch", {
+                  attrs: { collection: _vm.collection, user: this.user }
                 })
               ],
               1
@@ -42212,7 +42149,12 @@ var render = function() {
                                   "a",
                                   {
                                     staticClass: "dropdown-item",
-                                    attrs: { href: "#" }
+                                    attrs: { href: "" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.setCoverImage(sketch.id)
+                                      }
+                                    }
                                   },
                                   [_vm._v("Use as Cover Image")]
                                 )
@@ -42342,205 +42284,6 @@ var render = function() {
               1
             )
           ])
-        ]
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModalSelectCollection.vue?vue&type=template&id=38619cac&":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ModalSelectCollection.vue?vue&type=template&id=38619cac& ***!
-  \************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-outline-dark mr-auto",
-          staticStyle: { height: "40px" },
-          attrs: { href: "" },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.show()
-              _vm.getCollectionsJSON()
-            }
-          }
-        },
-        [_vm._v("Add Deviation")]
-      ),
-      _vm._v(" "),
-      _c(
-        "modal",
-        {
-          attrs: { name: "modal-select-collection", height: 850, width: 1120 }
-        },
-        [
-          _c("header", { staticClass: "modal-header d-flex" }, [
-            _c("h1", { staticClass: "mr-auto" }, [_vm._v("Add Deviations")]),
-            _vm._v(" "),
-            _c("button", { staticClass: "close ml-auto" }, [_vm._v("✖")])
-          ]),
-          _vm._v(" "),
-          _c("nav", { attrs: { "aria-label": "breadcrumb" } }, [
-            _c("ol", { staticClass: "breadcrumb" }, [
-              _c("li", { staticClass: "breadcrumb-item" }, [
-                _c("a", { attrs: { href: "#" } }, [_vm._v("Collections")])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "body" }, [
-            _c(
-              "div",
-              { staticClass: "collections-select d-flex" },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "collection-item",
-                    on: {
-                      click: function($event) {
-                        return _vm.selectAll()
-                      }
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "thumbnail-image" }, [
-                      _c("img", { attrs: { src: "/first_image", alt: "" } })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "collection-name" }, [
-                      _vm._v("All")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._l(_vm.collections, function(collection) {
-                  return _c(
-                    "a",
-                    _vm._b(
-                      {
-                        staticClass: "collection-item",
-                        on: {
-                          click: function($event) {
-                            return _vm.selectCollection(collection.id)
-                          }
-                        }
-                      },
-                      "a",
-                      collection.id,
-                      false
-                    ),
-                    [
-                      _c("div", { staticClass: "thumbnail-image" }, [
-                        _c("img", {
-                          attrs: {
-                            src: "/storage/" + collection.coverImage,
-                            alt: ""
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "collection-name" }, [
-                        _vm._v(_vm._s(collection.name))
-                      ])
-                    ]
-                  )
-                })
-              ],
-              2
-            )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "modal",
-        { attrs: { name: "modal-select-sketches", height: 850, width: 1120 } },
-        [
-          _c(
-            "div",
-            { staticClass: "sketches-select d-flex flex-wrap" },
-            _vm._l(_vm.sketches, function(sketch) {
-              return _c(
-                "a",
-                {
-                  key: sketch.id,
-                  class: "sketch-item " + _vm.isSelected(sketch.id),
-                  attrs: { value: sketch.id },
-                  on: {
-                    click: function($event) {
-                      return _vm.addOrRemove(sketch.id)
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "thumbnail-image",
-                      staticStyle: {
-                        height: "120px",
-                        width: "187px",
-                        overflow: "hidden",
-                        position: "relative"
-                      }
-                    },
-                    [
-                      _c("img", {
-                        staticStyle: {
-                          width: "187px",
-                          height: "120px",
-                          "object-fit": "cover",
-                          "object-position": "50% -19.5812px"
-                        },
-                        attrs: {
-                          src: "/storage/" + sketch.thumbnail,
-                          alt: "",
-                          width: "100%"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary ml-auto",
-              on: {
-                click: function($event) {
-                  return _vm.addToCollection()
-                }
-              }
-            },
-            [_vm._v("Add")]
-          )
         ]
       )
     ],
@@ -57504,8 +57247,8 @@ Vue.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_0___default.a);
 Vue.component('watch-button', __webpack_require__(/*! ./components/WatchButton.vue */ "./resources/js/components/WatchButton.vue")["default"]);
 Vue.component('table-draggable', __webpack_require__(/*! ./components/TableDraggable.vue */ "./resources/js/components/TableDraggable.vue")["default"]);
 Vue.component('modal-add-sketch', __webpack_require__(/*! ./components/ModalAddSketch.vue */ "./resources/js/components/ModalAddSketch.vue")["default"]);
-Vue.component('modal-edit-collection', __webpack_require__(/*! ./components/ModalEditCollection */ "./resources/js/components/ModalEditCollection.vue")["default"]);
-Vue.component('modal-select-collection', __webpack_require__(/*! ./components/ModalSelectCollection */ "./resources/js/components/ModalSelectCollection.vue")["default"]);
+Vue.component('modal-edit-collection', __webpack_require__(/*! ./components/ModalEditCollection */ "./resources/js/components/ModalEditCollection.vue")["default"]); // Vue.component('modal-select-collection', require('./components/ModalSelectCollection').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -57696,75 +57439,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalEditCollection_vue_vue_type_template_id_4632b3ba___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalEditCollection_vue_vue_type_template_id_4632b3ba___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/ModalSelectCollection.vue":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/ModalSelectCollection.vue ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ModalSelectCollection_vue_vue_type_template_id_38619cac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalSelectCollection.vue?vue&type=template&id=38619cac& */ "./resources/js/components/ModalSelectCollection.vue?vue&type=template&id=38619cac&");
-/* harmony import */ var _ModalSelectCollection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalSelectCollection.vue?vue&type=script&lang=js& */ "./resources/js/components/ModalSelectCollection.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ModalSelectCollection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ModalSelectCollection_vue_vue_type_template_id_38619cac___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ModalSelectCollection_vue_vue_type_template_id_38619cac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/ModalSelectCollection.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/ModalSelectCollection.vue?vue&type=script&lang=js&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/ModalSelectCollection.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalSelectCollection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ModalSelectCollection.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModalSelectCollection.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalSelectCollection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/ModalSelectCollection.vue?vue&type=template&id=38619cac&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/ModalSelectCollection.vue?vue&type=template&id=38619cac& ***!
-  \******************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalSelectCollection_vue_vue_type_template_id_38619cac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ModalSelectCollection.vue?vue&type=template&id=38619cac& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModalSelectCollection.vue?vue&type=template&id=38619cac&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalSelectCollection_vue_vue_type_template_id_38619cac___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalSelectCollection_vue_vue_type_template_id_38619cac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
